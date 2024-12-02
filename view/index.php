@@ -1,3 +1,11 @@
+<?php
+    // Remove confrim data from session
+    unset($_SESSION['confirm']);
+    // Get Errors
+    isset($_SESSION['errors']) ? $errors = json_decode($_SESSION['errors'], true) : '';
+    // Get Data
+    isset($_SESSION['data']) ? $oldData = json_decode($_SESSION['data']) : '';
+?>
 <?php view('layouts/header.php', ['title' => 'Form']); ?>
     <div class="container" >
         <div class="inner_container">

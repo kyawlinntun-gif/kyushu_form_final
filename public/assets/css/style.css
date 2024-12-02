@@ -1,0 +1,793 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Noto Sans", sans-serif;
+  }
+  .f_container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  }
+  a {
+  text-decoration: none;
+  font-size: 20px;
+  }
+  .inner_container {
+  max-width: 627px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  }
+  /* common */
+  .form_container .f_container .for_err {
+  color: #FF0000;
+  margin-top: 15px;
+  display: block;
+  }
+  figure {
+  line-height: 0;
+  }
+  li {
+  display: flex;
+  }
+  img {
+  width: 100%;
+  }
+  .form_container .f_container label {
+  width: fit-content;
+  }
+  .form_container .f_container p,  span,  label, .policy a{
+    font-size: 16px;
+  }
+  .form_container .f_container p {
+  margin-top: 8px;
+  }
+  /* all input */
+  .form_container .f_container input[type = "text"], input[type = "email"], input[type = "date"], input[type = "file"] {
+  padding: 12px 20px;
+  border: 1px solid #dddddd;
+  box-sizing: border-box;
+  font-size: 16px;
+  outline: none;
+  margin-top: 18px;
+  box-sizing: border-box;
+  width: 100%;
+  }
+  /* others input */
+  .form_container .f_container .others {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  }
+  .form_container .f_container .others label {
+  margin-bottom: 0;
+  }
+  .form_container .f_container .others input {
+  margin: 0;
+  margin-left: 34px;
+  }
+  /* fullname input */
+  .form_container .f_container .fullname input {
+  width: 100%;
+  }
+  .form_container .fullname .first-item {
+    margin-right: 20px;
+  }
+  .form_container .fullname .first-item, .form_container .fullname .second-item{
+  width: 47.21%;
+  }
+  .form_container .f_container .fullname {
+  display: flex;
+  justify-content: space-between;
+  }
+  ul{
+  list-style: none;
+  margin-top: 18px;
+  padding: 0;
+  }
+  .form_container .title {
+  font-size: 20px;
+  font-weight: bold;
+  }
+  .form_container  .f_container .region {
+  margin-top: 30px;
+  }
+  .form_container .f_container  .sub_txt {
+  font-weight: normal;
+  font-size: 16px;
+  margin-left: 16px;
+  }
+  .sms_text {
+  margin-left: 10px;
+  }
+  .form_gp {
+  margin-top: 70px;
+  }
+  .form_container .f_container hr {
+  border-top: 2px dashed #DADADA;
+  }
+  /* title */
+  .container .form_container h3 {
+  text-align: center;
+  }
+  .container .form_container h3 span {
+  font-size: 28px;
+  }
+  .inner_container .req  {
+  text-align: center;
+  margin: 20px 0 56px;
+  font-size: 20px;
+  }
+  .container .form_container h3 span::before{
+  content: "";
+  width: 16.5px;
+  height: 16.5px;
+  margin-right: 8px;
+  background: url('../img/title.png');
+  display: inline-block;
+  background-size: cover;
+  }
+  .dim {
+  background-color:#DADADA ;
+  pointer-events: none;
+  }
+  /* Region(s) visited in past Japan travels */
+  .dis_ragion {
+  pointer-events: none;
+  }
+  .container .form_container .f_container .inner_container .visited_japan .custom-checkbox {
+  width: 100%;
+  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  }
+  .custom-checkbox li {
+  margin-right: 40px;
+  }
+  /* for custom checkbox */
+  .all_checks_label, .all_checks_radio {
+  display: block;
+  position: relative;
+  padding-left: 45px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  box-sizing: border-box;
+  }
+  .all_checks_label input, .all_checks_radio input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+  }
+  .all_checks_label .checkmark, .all_checks_radio .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #fff;
+  border: 1px solid #dddddd;
+  }
+  .all_checks_label input:checked ~ .checkmark {
+  background-color: #B71F2C;
+  }
+  .all_checks_label .checkmark:after, .all_checks_radio .checkmark:after  {
+  content: "";
+  position: absolute;
+  display: none;
+  }
+  .all_checks_label input:checked ~ .checkmark:after, .all_checks_radio input:checked ~ .checkmark:after {
+  display: block;
+  }
+  .all_checks_label .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: 1px solid #fff;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+  }
+  /* for radio checkbox */
+  .all_checks_radio {
+  padding-left: 35px;
+  box-sizing: border-box;
+  }
+  .all_checks_radio .checkmark {
+  border-radius: 50%;
+  }
+  .all_checks_radio input:checked ~ .checkmark {
+  background-color: #fff;
+  }
+  .all_checks_radio .checkmark:after {
+  top:5px;
+  left: 5px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #B71F2C;
+  }
+  /* file upload */
+  .container .form_container .files_upload {
+  width: 100%;
+  background-color: #efefef;
+  padding: 70px 0;
+  margin-top: 100px;
+  }
+  .container .form_container .files_upload .img_upload {
+    margin: 0;
+  }
+  .container .form_container .files_upload .img_upload input {
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 10px 20px;
+  }
+  .container .form_container .files_upload input::file-selector-button {
+  padding: 10px;
+  border: thin solid grey;
+  border-radius: 3px;
+  box-sizing: border-box;
+  }
+  .container .form_container .files_upload .f_container .inner_container  .click_upload{
+  padding: 9px;
+  background-color: #fff;
+  border: 1px solid #727272;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 13px;
+  cursor: pointer;
+  font-size: 18px;
+  user-select: none;
+  box-sizing: border-box;
+  }
+  .container .form_container .files_upload .f_container .inner_container  .intro_vd {
+  margin-top: 25px;
+  }
+  /* policy */
+  .container .policy {
+  max-width: 470px;
+  margin: 50px auto 0;
+  }
+  .container .policy .all_checks_label {
+  margin-bottom: 0;
+  box-sizing: border-box;
+  }
+  .container .form_container .policy  a {
+  color: #d14800;
+  text-decoration: underline;
+  }
+  /* summit contact */
+  .container .form_container  .btn_submit{
+  max-width: 502px;
+  width: 100%;
+  margin: 56px auto 112px;
+  display: flex;
+  justify-content: center;
+  transition: background-color .4s;
+  flex-direction: column;
+  align-items: center;    
+  }
+  .container .form_container  .btn_submit button{
+  width: 100%;
+  text-align: center;
+  height: 84px;
+  background-color: #808080;
+  border: none;
+  padding: 10px;
+  box-sizing: border-box;
+  color: #fff;
+  font-weight: bold;
+  transition: background-color .4s;
+  box-sizing: border-box;
+  }
+  .container .form_container  .btn_submit button span {
+    font-size: 30px;
+  }
+  .container .form_container  .btn_submit .show_pointer, .container .form_container  .btn_submit .btn_lg {
+  cursor: pointer;
+  background-color: #000;
+  transition: background-color .4s;
+  }
+  .container .form_container  .btn_submit .show_pointer:hover, a:hover {
+  opacity: 0.7;
+  }
+  .container .form_container  .btn_submit .back_link {
+  font-size: 24px;
+  line-height: 27px;
+  text-decoration: underline;
+  font-weight: bold;
+  margin-bottom: 44px;
+  color: #2d2d2d;
+  }
+  /* covid contact */
+  .container .covid_contact {
+  background-color: #9D9D9D;
+  padding: 60px 0px;
+  }
+  .container .covid_contact .f_container  {
+  text-align: center;
+  }
+  .container .covid_contact .f_container  p {
+  color: #fff;
+  padding: 20px 0px;
+  font-weight: bold;
+  font-size: 22px;
+  }
+  .container .covid_contact .f_container  a {
+  padding: 30px 90px;
+  background-color: #fff;
+  display: inline-block;
+  color: #000000;
+  text-decoration: none;
+  font-weight: bold;
+  box-sizing: border-box;
+  }
+  /* jnto */
+  .container .jnto {
+  background-color: #2B2B2B;
+  }
+  .container .jnto {
+  background-color: #2b2b2b;
+  padding: 42px 0px;
+  }
+  .container .jnto .f_container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  }
+  .container .jnto .contact {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 10px;
+  margin: 0;
+  box-sizing: border-box;
+  }
+  .container .jnto .contact a {
+  text-decoration: none;
+  padding: 11px;
+  color: #7e7e7e;
+  box-sizing: border-box;
+  }
+  .container .jnto .contact a:hover {
+  color: #fff;
+  }
+  .container .jnto .logo {
+  width: 6.924%;
+  max-width: 72px;
+  }
+  .container .jnto .social {
+  display: flex;
+  align-items: center;
+  }
+  .container .jnto .social .facebook {
+  margin-right: 20px;
+  }
+  .container .jnto .social span {
+  font-size: 0;
+  }
+  .container .jnto .fa-brands.facebook::before, .container .jnto .instagram.fa-brands::before {
+  font-family: Font Awesome\ 5 Brands;
+  font-size: 18px;
+  color: #9c9c9c;
+  }
+  .container .jnto .fa-brands.facebook::before {
+  content: "\F39E";
+  }
+  .container .jnto .instagram.fa-brands::before {
+  content: "\F16D";
+  }
+  /* home contact */
+  .container .home_contact {
+  background-color: #333;
+  }
+  .container .home_contact .f_container .nav {
+  /* white-space: nowrap; */
+  padding: 15px 0px;
+  margin: 0;
+  }
+  .container .home_contact .f_container .nav li {
+  display: inline-block;
+  position: relative;
+  }
+  .container .home_contact .f_container .nav li a {
+  text-decoration: none;
+  color: #919191;
+  padding-right: 5px;
+  font-weight: bold;
+  box-sizing: border-box;
+  position: relative;
+  }
+  .container .home_contact .f_container .nav li::after {
+  content: "\3e";
+  font-family: Font Awesome\ 5 Brands;
+  font-size: 14px;
+  color: #9c9c9c;
+  padding: 0 2px;
+  }
+  .container .home_contact .f_container .nav li:first-child {
+  text-transform: uppercase;
+  }
+  .container .home_contact .f_container .nav li:last-child {
+  padding-right: 0;
+  }
+  .container .home_contact .f_container .nav li:last-child::after {
+  display: none;
+  }
+   /* footer */
+  .container .footer {
+  background-color: #000000;
+  }
+  .container .footer .f_container {
+  color: #9c9c9c;
+  text-align: center;
+  }
+  .container .footer .f_container p {
+    font-size: 24px;
+    padding: 50px 40px;
+    margin: 0;
+  }
+  /* video uploader */
+  .show{
+  display: block;
+  }
+  .container .pr_vdo_uploader {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: none;
+  }
+  .container .pr_vdo_uploader::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: #000000;
+  opacity: 0.5;
+  position: fixed;
+  top: 0;
+  left: 0;
+  }
+  .container .pr_vdo_uploader .pr_modal_inner {
+  position: relative;
+  max-width: 502px;
+  width: 100%;
+  height: 100%;
+  padding: 43px 0 54px;
+  margin: 70px auto 0;
+  z-index: 1;
+  }
+  .container .pr_vdo_uploader .pr_modal_inner .pr_vdo_item {
+  width: 100%;
+  overflow-y: auto;
+  height: 67%;
+  background-color: #fff;
+  overflow-x: hidden;
+  }
+  .container .pr_vdo_uploader .pr_modal_inner .close {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: flex-end;
+  background: url("../img/close_icon.svg");
+  margin-left: auto;
+  }
+  .container .pr_vdo_uploader .pr_modal_inner .pr_vdo_item::-webkit-scrollbar {
+  width: 8px;
+  }
+  .container .pr_vdo_uploader .pr_modal_inner .pr_vdo_item::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+  }
+  .container .pr_vdo_uploader .pr_modal_inner .pr_vdo_item iframe {
+  width: 100%;
+  font-size: 100%;
+  }
+  .upload_img {
+    width: 35%;
+    margin-top: 25px;
+  }
+  /* completed page */
+ .complete_container .banner .banner_content {
+  background: url("../img/kyushu_kv.png") 50%/cover;
+ }
+ .complete_container .banner .banner_content .inner_container .banner_text {
+  padding: 48px 0 70px;
+  max-width: 446px;
+  width: 31.858vw;
+  margin: 0 auto;
+ }
+ .complete_container .banner_color {
+  height: 16px;
+  background-color: #8aed98;
+ }
+ .complete_container .f_container .inner_container.l_main {
+  margin: 45px auto 125px;
+  max-width: 1040px;
+ }
+ .complete_container .f_container .inner_container h2 {
+  font-size: 24px;
+  line-height: 33px;
+  text-align: center;
+  margin-bottom: 59px;
+ }
+ .complete_container .f_container .inner_container p {
+  text-align: center;
+  font-size: 16px;
+  line-height: 27px;
+ }
+ .complete_container .f_container .inner_container .btn_m_top {
+  text-align: center;
+  margin-top: 82px;
+ }
+ .complete_container .f_container .inner_container .btn_m_top a {
+  font-size: 16px;
+  line-height: 27px;
+  text-align: center;
+  text-decoration: underline;
+  font-weight: 700;
+  color: #212121;
+ }
+  /* Media Queries */
+  @media only screen and (max-width: 768px)  {
+      .f_container {
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 calc(20 / 750 * 100vw);
+      }
+      .inner_container {
+        max-width: 100%;
+      }
+      /* common */
+      .form_container .f_container .for_err {
+      font-size: calc(24 / 750 * 100vw);
+      margin-top: calc(15 / 750 * 100vw);
+      }
+      .form_container .f_container p,  span, label,  .form_container .policy  a, input, a {
+        font-size: calc(28 / 750 * 100vw);
+      }
+      .form_container .f_container .policy label {
+        font-size: calc(27 / 750 * 100vw)
+      }
+      .form_container .f_container input[type = "text"], input[type = "email"], input[type = "date"], input[type = "file"]  {
+      padding: calc(12 / 750 * 100vw) calc(20 / 750 * 100vw);
+      border-width: calc(1 / 750 * 100vw);
+      margin-top: calc(18 / 750 * 100vw);
+      font-size: calc(28 / 750 * 100vw);
+      }
+      .form_container .title {
+      font-size: calc(28 / 750 * 100vw);
+      }
+      .form_container .f_container .region {
+      margin-top: calc(30 / 750 * 100vw);
+      }
+      .form_gp {
+      margin-top: calc(70 / 750 * 100vw);
+      }
+      .form_container .f_container ul  {
+      margin-top: calc(18 / 750 * 100vw);
+      }
+      .form_container .f_container  .sub_txt {
+        font-size: calc(24 / 750 * 100vw);
+        margin-left: calc(16 / 750 * 100vw);
+        }
+      /* title */
+      .container .form_container span {
+      font-size: calc(40 / 750 * 100vw);
+      }
+      .inner_container .req  {
+      margin: calc(20 / 750 * 100vw) 0 calc(56 / 750 * 100vw);
+      font-size: calc(32 / 750 * 100vw);
+      }
+      /* Full Name & person Name */
+      .fullname .first-item {
+      margin-right: calc(36 / 750 * 100vw);
+      }
+      .container .form_container h3 span::before{
+      content: "";
+      width: calc(30 / 750 * 100vw);
+      height: calc(30 / 750 * 100vw);
+      margin-right: calc(8 / 750 * 100vw);
+      }
+      .container .form_container h3 span {
+        font-size: calc(36 / 750 * 100vw);
+      }
+      .container .jnto .logo {
+      width: 100%;
+      }
+      /* national compaign */
+      .form_container .f_container .others input {
+      margin-left: calc(34 / 750 * 100vw);
+      }
+      /* Religion & SNS username*/
+      .all_checks_input {
+      width: calc(30 / 750 * 100vw);
+      height: calc(30 / 750 * 100vw);
+      margin-right: calc(20 / 750 * 100vw);
+      }
+      .custom-checkbox li {
+      margin-right: calc(40 / 750 * 100vw);
+      }
+      /* for custom checkbox */
+      .all_checks_label, .all_checks_radio {
+      padding-left: calc( 60 / 750 * 100vw);
+      margin-bottom: calc(15 / 750 * 100vw);
+      }
+      .all_checks_label .checkmark, .all_checks_radio .checkmark {
+      height: calc(40 / 750 * 100vw);
+      width: calc(40 / 750 * 100vw);
+      border-width: calc(1 / 750 * 100vw);
+      }
+      /* Create the indicator (the dot/circle - hidden when not checked) */
+      .all_checks_label .checkmark:after {
+      left: calc(15 / 750 * 100vw);
+      top: calc(2 / 750 * 100vw);
+      width: calc(8 / 750 * 100vw);
+      height: calc(24 / 750 * 100vw);
+      border: calc(1 / 750 * 100vw) solid #fff;
+      border-width: 0 calc(4 / 750 * 100vw) calc(4 / 750 * 100vw) 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+      }
+      /* Style the indicator (dot/circle) */
+      .all_checks_radio .checkmark:after {
+      top:calc(6 / 750 * 100vw);
+      left: calc(7 / 750 * 100vw);
+      width: calc(28 / 750 * 100vw);
+      height: calc(28 / 750 * 100vw);
+      }
+      /* file upload */
+      .container .form_container .files_upload {
+      margin-top: calc(100 / 750 * 100vw);
+      padding: calc(70 / 750 * 100vw) 0;
+      }
+      .container .form_container .files_upload .img_upload input {
+      border-radius: calc(5 / 750 * 100vw);
+      padding: calc(10 / 750 * 100vw) calc(20 / 750 * 100vw);
+      }
+      .form_container .fullname .first-item {
+        margin-right: calc(20 / 750 * 100vw);
+      }
+      .container .form_container .files_upload input::file-selector-button {
+      padding: calc(10 / 750 * 100vw);
+      border-radius: calc(3 / 750 * 100vw);
+      }
+      .container .form_container .files_upload .f_container .inner_container  .click_upload{
+      padding: calc(9 / 750 * 100vw);
+      border-width: calc(1 / 750 * 100vw);
+      margin-top: calc(13 / 750 * 100vw);
+      font-size: calc(24 / 750 * 100vw);
+      }
+      .container .form_container .files_upload .f_container .inner_container  .intro_vd {
+      margin-top: calc(25 / 750 * 100vw);
+      }
+      /* policy */
+      .container .policy {
+      max-width:  100%;
+      margin: calc(50 / 750 * 100vw) auto 0;
+      }
+      .container .policy .all_checks_label {
+      margin-bottom: 0;
+      }
+      /* summit contact */
+      .container .form_container  .btn_submit{
+      max-width: calc(502 / 750 * 100vw);
+      margin: calc(56 / 750 * 100vw) auto calc(112 / 750 * 100vw);  
+      }
+      .container .form_container  .btn_submit button  {
+      height: calc(84 / 750 * 100vw);
+      padding: calc(10 / 750 * 100vw);
+      }
+      .container .form_container  .btn_submit button span {
+        font-size: calc(36 / 750 * 100vw);
+      }
+      .container .form_container  .btn_submit .back_link {
+      font-size: calc(40 / 750 * 100vw);
+      line-height: calc(27 / 750 * 100vw);
+      margin-bottom: calc(44 / 750 * 100vw);
+      }
+      .form_container .f_container hr  {
+       border-width: calc(3 / 750 * 100vw);
+      }
+      /* covid contact */
+      .container .covid_contact {
+      padding: calc(60 / 750 * 100vw) 0px;
+      }
+      .container .covid_contact .f_container  p {
+      padding: calc(20 / 750 * 100vw) 0px;
+      font-size: calc(22 / 750 * 100vw);
+      margin: 0;
+      }
+      .container .covid_contact .f_container  a {
+      padding: calc(30 / 750 * 100vw) calc(50 / 750 * 100vw);
+      font-size: calc(20 / 750 * 100vw);
+      }
+      /* jnto */
+      .container .jnto {
+      padding: calc(42 / 750 * 100vw) 0px;
+      }
+      .container .jnto ul {
+      padding: calc(10 / 750 * 100vw);
+      }
+      .container .jnto .contact a {
+      padding: calc(11 / 750 * 100vw);
+      font-size: calc(24 / 750 * 100vw);
+      }
+      .container .jnto .social .facebook {
+      margin-right: calc(20 / 750 * 100vw);
+      }
+      .container .jnto .fa-brands.facebook::before, .container .jnto .instagram.fa-brands::before {
+      font-size: calc(36 / 750 * 100vw);
+      }
+      /* home contact */
+      .container .home_contact .f_container .nav {
+      padding: calc(15 / 750 * 100vw) 0px;
+      }
+      .container .home_contact .f_container .nav li a {
+      padding-right: calc(5 / 750 * 100vw);
+      font-size: calc(24 / 750 * 100vw);
+      }
+      .container .home_contact .f_container .nav li::after {
+      padding: 0 calc(2 / 750 * 100vw);
+      font-size: calc(24 / 750 * 100vw);
+      }
+      .container .footer .f_container p {
+        font-size: calc(24   / 750 * 100vw);
+        padding: calc(50   / 750 * 100vw) calc(40   / 750 * 100vw);
+      }
+      .upload_img {
+        margin-top: calc(25   / 750 * 100vw);
+      }
+      .container .pr_vdo_uploader .pr_modal_inner {
+      max-width: 86.66667vw;
+      padding: 12vw 0;
+      margin-top: 70px
+      }
+      .container .pr_vdo_uploader .pr_modal_inner .pr_vdo_item {
+      width: 100%;
+      }
+      .complete_container .banner .banner_content {
+        background: url("../img/kyushu_kv_sp.png") 50%/cover;
+      }
+      .complete_container .banner .banner_content .inner_container .banner_text {
+      padding: calc(48   / 750 * 100vw) 0 calc(70   / 750 * 100vw);
+      max-width: 68.53333vw;
+      width: 100%;
+      }
+      .complete_container  .banner_color {
+      height: calc(16   / 750 * 100vw);
+      }
+      .complete_container .f_container .inner_container.l_main {
+      margin: calc(45   / 750 * 100vw) 0 calc(125   / 750 * 100vw);
+      }
+      .complete_container .f_container .inner_container h2 {
+      font-size: calc(30   / 750 * 100vw);
+      line-height: calc(33   / 750 * 100vw);
+      margin-bottom: calc(59   / 750 * 100vw);
+      }
+      .complete_container .f_container .inner_container p {
+      font-size: calc(28   / 750 * 100vw);
+      line-height: calc(47   / 750 * 100vw);
+      }
+      .complete_container .f_container .inner_container .btn_m_top {
+      margin-top: calc(82   / 750 * 100vw);
+      }
+      .complete_container .f_container .inner_container .btn_m_top a {
+      font-size: calc(30   / 750 * 100vw);
+      line-height: calc(27   / 750 * 100vw);
+      }
+  }

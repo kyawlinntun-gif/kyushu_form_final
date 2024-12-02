@@ -1,0 +1,18 @@
+<?php
+
+$data = [
+    'user_id' => 1,
+    'user_data' => "dsa", 
+    'flag' => 1,
+    'hdgs'=>2
+];
+
+ 
+ $columns= implode(", ", array_keys($data));
+ $valueVariables=":". implode(", :", array_keys($data));
+ $table="users_table";
+
+ $query = "INSERT INTO $table ( $columns) VALUES ( $valueVariables)";
+
+ $query = "INSERT INTO users_table (user_id, user_data, flag) VALUES (:user_id, :user_data, :flag)";
+ echo  $query ;

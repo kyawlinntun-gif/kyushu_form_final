@@ -1,6 +1,6 @@
 <?php
 
-require('Validator.php');
+require('validator.php');
 
 // Post Data
 $firstName = isset($_POST['firstName']) ? trim($_POST['firstName']) : '';
@@ -121,7 +121,9 @@ if ($validator->validate()) {
     $data['uploadAvatar'] = $avatarName;
     $_SESSION['data'] = json_encode($data);
     // Go to confirm page
-    header('Location: /confirm');
+    $router->redirect('/confirm');
 } else {
     $errors = $validator->errors();
+    $_SESSION['errors'] = json_encode($errors);
+    $router->redirect('/');
 }

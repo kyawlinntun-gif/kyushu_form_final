@@ -69,7 +69,7 @@ class Validator {
             }
         }
         // Check for length should not greater than variable number field
-        if($rule === 'lengthNotGreaterThan' && $ruleFunction->lengthNotGreaterThan($value, $rule))
+        if($rule === 'lengthNotGreaterThan' && $ruleFunction->lengthNotGreaterThan($value, $ruleValueArray[0]))
         {
             $this->addError($field, $customMessage ?: "This " . $fieldName . " must not be exceed " . $ruleValueArray[0] . " characters!");
         }

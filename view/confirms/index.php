@@ -1,4 +1,8 @@
 <?php 
+    // Unset Errors
+    if(isset($_SESSION['errors'])) {
+        unset($_SESSION['errors']);
+    }
     // Get Data
     isset($_SESSION['data']) ? $data = json_decode($_SESSION['data']) : '';
 ?>
@@ -210,7 +214,9 @@
                         <div class="inner_container">
                             <div class="form_gp img_upload">
                                 <h5 class="title">Please upload a photo that shows all applicate in the photo</h5>
-                                <img src="./../assets/img/<?= $data->uploadAvatar ?>" alt="<?= $data->uploadAvatar ?>" class="avatar_img">
+                                <figure class="upload_img">
+                                    <img src="./../assets/img/<?= $data->uploadAvatar ?>" alt="<?= $data->uploadAvatar ?>">
+                                </figure>
                             </div>
 
                             <div class="form_gp">

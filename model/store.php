@@ -47,4 +47,10 @@ $kyushuDb = [
 $kyushuJson = json_encode($kyushuDb);
 
 $db = new DB();
-$db->insert('users_table', ['user_id' => 1, 'user_data' => $kyushuJson, 'flag' => 1]);
+$result = $db->insert('users_table', ['user_id' => 1, 'user_data' => $kyushuJson, 'flag' => 1]);
+
+if($result) {
+    unset($_SESSION['data']);
+    unset($_SESSION['confirm']);
+    $router->redirect('/complete');
+}

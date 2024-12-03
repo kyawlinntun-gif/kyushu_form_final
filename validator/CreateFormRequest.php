@@ -1,6 +1,6 @@
 <?php
 
-require('validator.php');
+require('Validator.php');
 
 // Post Data
 $firstName = isset($_POST['firstName']) ? trim($_POST['firstName']) : '';

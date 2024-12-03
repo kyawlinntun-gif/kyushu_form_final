@@ -1,5 +1,5 @@
 <?php
-
+require (VALIDATOR . 'Rules.php');
 class Validator {
     protected $data;
     protected $errors = [];
@@ -61,30 +61,33 @@ class Validator {
         // Check for custom error message for the field and rule
         $customMessage = $this->getCustomErrorMessage($field, $rule);
 
+        $ruleFunction = new Rules();
+
         // Check for required field
-        if ($rule === 'required' && (is_null($value) || $value === '' || (isset($value['size']) && $value['size'] <= 0))) {
-            $this->addError($field, $customMessage ?: "This " . $fieldName . " is required!");
-        } 
+        if($rule === 'required' && $ruleFunction->required($value)) {
+            if($ruleFunction->required($value)) {
+                $this->addError($field, $customMessage ?: "This " . $fieldName . " is required!");
+            }
+        }
 
         // Custom nationality validation: "Other" selected but input is empty
         if ($rule === 'nationalityOtherRequired') {
-            if (isset($this->data['nationality']) && $this->data['nationality'] === 'other' && (is_null($value) || $value === '') && $field === 'nationality') {
+            if (isset($this->data['nationality']) && $this->data['nationality'] === 'other' && $ruleFunction->required($value)) {
                 $this->addError($field, $customMessage ?: "This other " . $fieldName . " is required!");
             }
-            if (isset($this->data['tNationality']) && $this->data['tNationality'] === 'other' && (is_null($value) || $value === '') && $field === 'tNationality') {
+            if (isset($this->data['tNationality']) && $this->data['tNationality'] === 'other' && $ruleFunction->required($value)) {
                 $this->addError($field, $customMessage ?: "This other" . $fieldName . " is required!");
             }
         }
 
         // Check for length should not greater than variable number field
-        if ($rule === 'lengthNotGreaterThan') {
-            if (strlen($value) > $ruleValueArray[0]) {
-                $this->addError($field, $customMessage ?: "This " . $fieldName . " must not be exceed " . $ruleValueArray[0] . " characters!");
-            }
+        if($rule === 'lengthNotGreaterThan' && $ruleFunction->lengthNotGreaterThan($value, $rule))
+        {
+            $this->addError($field, $customMessage ?: "This " . $fieldName . " must not be exceed " . $ruleValueArray[0] . " characters!");
+
         }
 
         // Check for length of years should not greater than 4 field
-        
         if($rule === 'year') {
             if (!preg_match('/^(1\d{3}|2\d{3})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/', $value)) {
                 $this->addError($field, $customMessage ?: "Year must be valid!");

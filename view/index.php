@@ -1,13 +1,11 @@
 <?php
     // Remove confrim data from session
     unset($_SESSION['confirm']);
-   
-
     // Get Errors
     isset($_SESSION['errors']) ? $errors = json_decode($_SESSION['errors'], true) : '';
     // Get Data
     isset($_SESSION['data']) ? $oldData = json_decode($_SESSION['data']) : '';
-
+    // When refresh, unset all session
     unset($_SESSION['errors']);
     unset($_SESSION['data']);
 

@@ -65,12 +65,13 @@ class HomeController {
     }
     public function confirm($router) 
     {
+        include VIEW . 'confirms/index.php';
+        
         // Not allow user to enter without form submit
-        if($_SESSION['confirm']) {
-            include VIEW . 'confirms/index.php';
-        } else {
+        if(!$_SESSION['confirm']) {
             $router->redirect('/');
-        } 
+        }
+         
     }
     public function complete()
     {

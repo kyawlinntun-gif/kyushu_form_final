@@ -124,6 +124,7 @@ if ($validator->validate()) {
     $router->redirect('/confirm');
 } else {
     $errors = $validator->errors();
+    $_SESSION['data'] = json_encode($data);
     $_SESSION['errors'] = json_encode($errors);
     $router->redirect('/');
 }

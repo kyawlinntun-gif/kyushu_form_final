@@ -88,29 +88,18 @@ class Validator {
         }
 
         // Check for length of years should not greater than 4 field
-        if($rule === 'year') {
-            if (!preg_match('/^(1\d{3}|2\d{3})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/', $value)) {
-                $this->addError($field, $customMessage ?: "Year must be valid!");
-            }
+        if($rule === 'year' && $ruleFunction->date($value)) {
+            $this->addError($field, $customMessage ?: "Year must be valid!");
         }
             
         // Check for date should not greater than today field
-        if($rule === 'now') {
-            $date = new \DateTime($value);
-            $today = new \DateTime();
-            if($date > $today) {
-                $this->addError($field, $customMessage ?: "This " . $fieldName . " should not be greater than today!");
-            }
+        if($rule === 'now' && $ruleFunction->notToday($value)) {
+            $this->addError($field, $customMessage ?: "This " . $fieldName . " should not be greater than today!");
         }
         
         // Check for age should not greater than variable age field
-        if($rule === 'ageNotGreaterThan') {
-            $date = new \DateTime($value);
-            $today = new \DateTime();
-            $difDate = $today->diff($date)->y;
-            if($difDate > $ruleValueArray[0]) {
-                $this->addError($field, $customMessage ?: "This " . $fieldName ." must be within " . $ruleValueArray[0] . " years!");
-            }
+        if($rule === 'ageNotGreaterThan' && $ruleFunction->ageWithin($value, $rule)) {
+            $this->addError($field, $customMessage ?: "This " . $fieldName ." must be within " . $ruleValueArray[0] . " years!");
         }
 
         // Check for username should not be a number

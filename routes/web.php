@@ -1,26 +1,23 @@
 <?php
 
 require(ROUTES . 'routes.php');
+require(CONTROLLER . 'HomeController.php');
 $router = new Router();
+$controller = new HomeController();
 // Define your routes
-$router->get('/', function () {
-    include VIEW . 'index.php';
+$router->get('/', function () use ($controller) {
+    $controller->index();
 });
-$router->post('/create', function () use ($router) {
-    include VALIDATOR . 'createFormRequest.php';
+$router->post('/create', function () use ($router, $controller) {
+    $controller->create($router);
 });
-$router->get('/confirm', function () use ($router) {
-    // Not allow user to enter without form submit
-    if($_SESSION['confirm']) {
-        include VIEW . 'confirms/index.php';
-    } else {
-        $router->redirect('/');
-    }    
+$router->get('/confirm', function () use ($router, $controller) {   
+    $controller->confirm($router);
 });
-$router->post('/store', function () {
-    include MODEL . 'store.php';
+$router->post('/store', function () use ($router, $controller) {
+    $controller->store($router);
 });
-$router->post('/complete', function() {
-    include VIEW . 'complete.php';
+$router->get('/complete', function () use ($controller) {
+    $controller->complete();
 });
 $router->dispatch();

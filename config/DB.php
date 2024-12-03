@@ -43,8 +43,9 @@ class DB{
             //dynamic bind
             foreach($data as $column=>$value){
                 $pdo_rule= is_int($value)?PDO::PARAM_INT:PDO::PARAM_STR;
-                $stmt->bindValue(": $column", $value, $pdo_rule);
+                $stmt->bindValue(":$column", $value, $pdo_rule);
             }
+            
             $result = $stmt->execute();
             return $result;
         } catch (PDOException $e) {

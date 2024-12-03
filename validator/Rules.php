@@ -63,7 +63,7 @@ class Rules {
     }
     public function is_number($value)
     {
-        if(is_numeric($value)) {
+        if(!is_numeric($value)) {
             return 1;
         }
         return 0;

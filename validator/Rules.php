@@ -41,7 +41,7 @@ class Rules {
         return 0;
     }
     
-    public function notNumber($value)
+    public function is_number($value)
     {
         if(is_numeric($value)) {
             return 1;

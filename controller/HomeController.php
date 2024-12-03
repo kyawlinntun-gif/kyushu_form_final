@@ -19,41 +19,37 @@ class HomeController {
 
         $kyushuDb = [
             'main' => [
-                'firstName' => htmlspecialchars($data->firstName, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5),
-                'lastName' => htmlspecialchars($data->lastName, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5),
-                'dob' => htmlspecialchars($data->dob, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5),
-                'gRadio' => htmlspecialchars($data->gRadio, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5),
-                'nationality' => $data->nationality === 'singaporean' ? htmlspecialchars($data->nationality, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5) : htmlspecialchars($data->nationalityInput, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5),
-                'occupation' => htmlspecialchars($data->occupation, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5),
-                'religion' => htmlspecialchars($data->religion, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5),
-                'snsUsername' => htmlspecialchars($data->snsUsername, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5),
-                'jpRadio' => htmlspecialchars($data->jpRadio, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5),
-                'region' => $data->region ? array_map(function($item) {
-                    return htmlspecialchars($item, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5);
-                }, $data->region) : '',
-                'dietary' => htmlspecialchars($data->dietary, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5),
-                'email' => htmlspecialchars($data->email, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5),
-                'phone' => htmlspecialchars($data->phone, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5),
+                'firstName' => prepareToStore($data->firstName),
+                'lastName' => prepareToStore($data->lastName),
+                'dob' => prepareToStore($data->dob),
+                'gRadio' => prepareToStore($data->gRadio),
+                'nationality' => $data->nationality === 'singaporean' ? prepareToStore($data->nationality) : prepareToStore($data->nationalityInput),
+                'occupation' => prepareToStore($data->occupation),
+                'religion' => prepareToStore($data->religion),
+                'snsUsername' => prepareToStore($data->snsUsername),
+                'jpRadio' => prepareToStore($data->jpRadio),
+                'region' => $data->region ? normalize($data->region): '',
+                'dietary' => prepareToStore($data->dietary),
+                'email' => prepareToStore($data->email),
+                'phone' => prepareToStore($data->phone),
             ],
             'pt1' => [
-                'tFirstName' => htmlspecialchars($data->tFirstName, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5),
-                'tLastName' => htmlspecialchars($data->tLastName, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5),
-                'tDob' => htmlspecialchars($data->tDob, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5),
-                'sgRadio' => htmlspecialchars($data->sgRadio, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5),
-                'tNationality' => $data->tNationality === 'singaporean' ? htmlspecialchars($data->tNationality, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5) : htmlspecialchars($data->tNationalityInput, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5),
-                'relationship' => htmlspecialchars($data->relationship, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5),
-                'tDietary' => htmlspecialchars($data->tDietary, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5),
+                'tFirstName' => prepareToStore($data->tFirstName),
+                'tLastName' => prepareToStore($data->tLastName),
+                'tDob' => prepareToStore($data->tDob),
+                'sgRadio' => prepareToStore($data->sgRadio),
+                'tNationality' => $data->tNationality === 'singaporean' ? prepareToStore($data->tNationality) : prepareToStore($data->tNationalityInput),
+                'relationship' => prepareToStore($data->relationship),
+                'tDietary' => prepareToStore($data->tDietary),
                 'uploadAvatar' => $data->uploadAvatar,
             ],
             'pt2' => [
-                'gFirstName' => htmlspecialchars($data->gFirstName, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5),
-                'gLastName' => htmlspecialchars($data->gLastName, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5),
-                'tPeriod' => $data->tPeriod ? array_map(function($item) {
-                    return htmlspecialchars($item, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5);
-                }, $data->tPeriod) : '',
+                'gFirstName' => prepareToStore($data->gFirstName),
+                'gLastName' => prepareToStore($data->gLastName),
+                'tPeriod' => $data->tPeriod ? normalize($data->tPeriod) : '',
                 'uVideo' => $data->uVideo ? 'Uploaded' : 'Not Uploaded',
                 'campaign' => $data->campaign ? array_map(function($item) use ($data) {
-                    return $item === 'other' ? htmlspecialchars($data->campaignInput, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5) : htmlspecialchars($item, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5);
+                    return $item === 'other' ? prepareToStore($data->campaignInput) : prepareToStore($item);
                 }, $data->campaign): ''
             ]
         ];
@@ -61,7 +57,6 @@ class HomeController {
 
         $db = new DB();
         $result = $db->insert('users_table', ['user_id' => 1, 'user_data' => $kyushuJson, 'flag' => 1]);
-
         if($result) {
             unset($_SESSION['data']);
             unset($_SESSION['confirm']);

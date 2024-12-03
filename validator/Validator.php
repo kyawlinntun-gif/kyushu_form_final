@@ -137,7 +137,7 @@ class Validator {
         if($field === 'phone') {
             $formatValue = str_replace(['+', ' '], '', $value);
             // Check for phone should be number only
-            if($rule === 'phoneNumber' && $ruleFunction->numberOnly($formatValue)) {
+            if($rule === 'phoneNumber' && $ruleFunction->is_number($formatValue)) {
                 $this->addError($field, $customMessage ?: "This " . $fieldName . " must contain only numbers!");
             } 
             // Check for phone number should be 7 and 25 digits

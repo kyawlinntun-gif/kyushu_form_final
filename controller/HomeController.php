@@ -16,7 +16,6 @@ class HomeController {
     {
         // Change data storage format and Store on database
         $data = json_decode($_SESSION['data']);
-
         $kyushuDb = [
             'main' => [
                 'firstName' => prepareToStore($data->firstName),
@@ -54,7 +53,6 @@ class HomeController {
             ]
         ];
         $kyushuJson = json_encode($kyushuDb);
-
         $db = new DB();
         $result = $db->insert('users_table', ['user_id' => 1, 'user_data' => $kyushuJson, 'flag' => 1]);
         if($result) {
@@ -66,12 +64,10 @@ class HomeController {
     public function confirm($router) 
     {
         include VIEW . 'confirms/index.php';
-        
         // Not allow user to enter without form submit
         if(!$_SESSION['confirm']) {
             $router->redirect('/');
         }
-         
     }
     public function complete()
     {

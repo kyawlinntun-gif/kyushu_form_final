@@ -8,7 +8,6 @@ class Rules {
         }
         return 0; 
     }
-
     //string length
     public function lengthNotGreaterThan($value, $rule)
     {
@@ -17,15 +16,12 @@ class Rules {
         }
         return 0;
     }
-
-
     public function lengthBetween($value,$min,$max){
         if(strlen($value) < $min || strlen($value) > $max) {
            return 1;
         }
         return 0;
     }
-   
     public function date($value)
     {
         if(!preg_match('/^(1\d{3}|2\d{3})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/', $value)) {
@@ -33,7 +29,6 @@ class Rules {
         }
         return 0;
     }
-
     public function notToday($value)
     {
         $date = new \DateTime($value);
@@ -43,7 +38,6 @@ class Rules {
         }
         return 0;
     }
-
     public function ageWithin($value, $rule){
         $date = new \DateTime($value);
         $today = new \DateTime();
@@ -53,14 +47,12 @@ class Rules {
         }
         return 0;
     }
-    
     public function fileSize($value,$max){
         if($value['size'] > ($max * 1048576)) {
             return 1;
         }
         return 0;
     }
-
     public function fileType($value,$ruleValueArray){
        // check for image type
         if(!in_array(strtolower(pathinfo($value['name'], PATHINFO_EXTENSION)), $ruleValueArray)) {
@@ -68,7 +60,6 @@ class Rules {
         }
         return 0;
     }
-    
     public function is_number($value)
     {
         if(is_numeric($value)) {

@@ -8,7 +8,6 @@
     // When refresh, unset all session
     unset($_SESSION['errors']);
     unset($_SESSION['data']);
-
 ?>
 <?php view('layouts/header.php', ['title' => 'Form']); ?>
     <div class="container" >

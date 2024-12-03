@@ -38,14 +38,15 @@ class Rules {
         }
         return 0;
     }
-    public function ageWithin($value, $rule){
+    public function ageWithin($value,$rule){
         $date = new \DateTime($value);
-        $today = new \DateTime();
-        $difDate = $today->diff($date)->y;
-        if($difDate > $rule) {
+        $maxInterval = DateInterval::createFromDateString("$rule years");
+        $today = new DateTime();
+        $limit = (clone $today)->sub($maxInterval);
+        if( $limit  >=   $date ) {
             return 1;        
         }
-        return 0;
+        return 0;        
     }
     public function fileSize($value,$max){
         if($value['size'] > ($max * 1048576)) {
@@ -67,9 +68,9 @@ class Rules {
         }
         return 0;
     }
-    public function specialCharacterNotNumber($value)
+    public function specialCharacter($value)
     {
-        if(preg_match('/[0-9]|[^a-zA-Z\s\p{L}\'-]/u', $value)) {
+        if(preg_match('/[^a-zA-Z0-9\s\p{L}\'-]/u', $value)) {
             return 1;
         }
         return 0;
@@ -77,6 +78,13 @@ class Rules {
     public function checkEmail($value)
     {
         if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+            return 1;
+        }
+        return 0;
+    }
+    public function notContainNumber($value){
+        
+        if(preg_match('/\d/', $value)){
             return 1;
         }
         return 0;

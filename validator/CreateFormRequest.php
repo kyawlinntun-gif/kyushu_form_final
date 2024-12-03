@@ -68,8 +68,6 @@ $data = [
     'campaignInput' => $campaignInput,
     'policy' => $policy
 ];
-// Store Data in session
-$_SESSION['data'] = json_encode($data);
 
 // Rules
 $rules = [
@@ -123,6 +121,8 @@ if ($validator->validate()) {
     // Go to confirm page
     $router->redirect('/confirm');
 } else {
+    // Store Data in session
+    $_SESSION['data'] = json_encode($data);
     $errors = $validator->errors();
     $_SESSION['data'] = json_encode($data);
     $_SESSION['errors'] = json_encode($errors);

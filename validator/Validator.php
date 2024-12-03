@@ -114,7 +114,7 @@ class Validator {
         }
 
         // Check for username should not be a number
-        if($rule === 'notNumber' && $ruleFunction->notNumber($value)) {
+        if($rule === 'notNumber' && $ruleFunction->is_number($value)) {
             $this->addError($field, $customMessage ?: "This " . $fieldName . " should not be number!");
         }
 
@@ -137,7 +137,7 @@ class Validator {
         if($field === 'phone') {
             $formatValue = str_replace(['+', ' '], '', $value);
             // Check for phone should be number only
-            if($rule === 'phoneNumber' && $ruleFunction->numberOnly($formatValue)) {
+            if($rule === 'phoneNumber' && $ruleFunction->is_number($formatValue)) {
                 $this->addError($field, $customMessage ?: "This " . $fieldName . " must contain only numbers!");
             } 
             // Check for phone number should be 7 and 25 digits

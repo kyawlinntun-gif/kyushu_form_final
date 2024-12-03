@@ -59,6 +59,7 @@ class Validator {
                 $this->addError($field, $customMessage ?: "This " . $fieldName . " is required!");
             }
         }
+        
         // Custom nationality validation: "Other" selected but input is empty
         if ($rule === 'nationalityOtherRequired') {
             if (isset($this->data['nationality']) && $this->data['nationality'] === 'other' && $ruleFunction->required($value)) {
@@ -69,7 +70,7 @@ class Validator {
             }
         }
         // Check for length should not greater than variable number field
-        if($rule === 'lengthNotGreaterThan' && $ruleFunction->lengthNotGreaterThan($value, $rule))
+        if($rule === 'lengthNotGreaterThan' && $ruleFunction->lengthNotGreaterThan($value, $ruleValueArray[0]))
         {
             $this->addError($field, $customMessage ?: "This " . $fieldName . " must not be exceed " . $ruleValueArray[0] . " characters!");
         }
@@ -82,17 +83,18 @@ class Validator {
             $this->addError($field, $customMessage ?: "This " . $fieldName . " should not be greater than today!");
         }
         // Check for age should not greater than variable age field
-        if($rule === 'ageNotGreaterThan' && $ruleFunction->ageWithin($value, $ruleValueArray[0])) {
+        if($rule === 'ageNotGreaterThan' && $ruleFunction->ageWithin($value,$ruleValueArray[0] )) {
             $this->addError($field, $customMessage ?: "This " . $fieldName ." must be within " . $ruleValueArray[0] . " years!");
         }
-        // Check for username should not be a number
-        if($rule === 'notNumber' && $ruleFunction->is_number($value)) {
-            $this->addError($field, $customMessage ?: "This " . $fieldName . " should not be number!");
+        // Check for required field
+        if($rule === 'notContainNumber' && $ruleFunction->notContainNumber($value)) {
+            $this->addError($field, $customMessage ?: "This " . $fieldName . " should not contain number.");
         }
         // Check for specialchars and numbers field
-        if($rule === 'specialCharacter&notNumber' && $ruleFunction->specialCharacterNotNumber($value)) {
-            $this->addError($field, $customMessage ?: "This " . $fieldName . " can't contain special characters & not numbers!");
+        if($rule === 'specialCharacter' && $ruleFunction->specialCharacter($value)) {
+            $this->addError($field, $customMessage ?: "This " . $fieldName . " can't contain special characters!");
         }
+        
         // Check if jpRadio is not never, region must be required
         if($rule === 'regionCheckNotNever' && $this->data['jpRaido'] !== 'never' && $ruleFunction->required($value)) {
             $this->addError($field, $customMessage ?: "This ". $fieldName ." is required!");

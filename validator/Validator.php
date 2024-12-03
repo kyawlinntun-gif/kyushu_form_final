@@ -96,7 +96,7 @@ class Validator {
         }
         
         // Check if jpRadio is not never, region must be required
-        if($rule === 'regionCheckNotNever' && $this->data['jpRaido'] !== 'never') {
+        if($rule === 'regionCheckNotNever' && $this->data['jpRadio'] !== 'never') {
             if($ruleFunction->required($value)) {
                 $this->addError($field, $customMessage ?: "This ". $fieldName ." is required!");
             }

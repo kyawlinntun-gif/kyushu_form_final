@@ -82,7 +82,7 @@ class Validator {
             $this->addError($field, $customMessage ?: "This " . $fieldName . " should not be greater than today!");
         }
         // Check for age should not greater than variable age field
-        if($rule === 'ageNotGreaterThan' && $ruleFunction->ageWithin($value, $rule)) {
+        if($rule === 'ageNotGreaterThan' && $ruleFunction->ageWithin($value, $ruleValueArray[0])) {
             $this->addError($field, $customMessage ?: "This " . $fieldName ." must be within " . $ruleValueArray[0] . " years!");
         }
         // Check for username should not be a number

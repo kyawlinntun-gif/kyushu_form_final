@@ -1,7 +1,6 @@
 <?php
 
 require('Validator.php');
-
 // Post Data
 $firstName = isset($_POST['firstName']) ? trim($_POST['firstName']) : '';
 $lastName = isset($_POST['lastName']) ? trim($_POST['lastName']) : '';
@@ -33,8 +32,6 @@ $uVideo = isset($_POST['uVideo']) ? $_POST['uVideo'] : '';
 $campaign = isset($_POST['campaign']) ? $_POST['campaign'] : '';
 $campaignInput = isset($_POST['campaignInput']) ? trim($_POST['campaignInput']) : '';
 $policy = isset($_POST['policy']) ? $_POST['policy'] : '';
-
-
 // Data
 $data = [
     'firstName' => $firstName,
@@ -68,7 +65,6 @@ $data = [
     'campaignInput' => $campaignInput,
     'policy' => $policy
 ];
-
 // Rules
 $rules = [
     'firstName' => 'required|notNumber|specialCharacter&notNumber|lengthNotGreaterThan:128',
@@ -102,11 +98,8 @@ $rules = [
     'campaignInput' => 'campaignOtherRequired|notNumber|specialCharacter&notNumber|lengthNotGreaterThan:128',
     'policy' => 'required'
 ];
-
 $customMessages = [];
-
 $validator = new Validator($data, $rules, $customMessages);
-
 if ($validator->validate()) {
     $_SESSION['confirm'] = true;
     // Store and save image with name

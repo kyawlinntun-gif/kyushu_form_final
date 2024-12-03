@@ -113,28 +113,23 @@ class Validator {
             }
         }
 
-        // Check for specialchars and numbers field
-        if ($rule === 'specialCharacter&notNumber') {
-            if (preg_match('/[0-9]/', $value)) {
-                $this->addError($field, $customMessage ?: "This " . $fieldName . " can't contain numbers!");
-            }
-            elseif (preg_match('/[^a-zA-Z\s\p{L}\'-]/u', $value)) {
-                $this->addError($field, $customMessage ?: "This " . $fieldName . " can't contain special characters!");
-            }
-        }
-        
         // Check for username should not be a number
-        if($rule === 'notNumber' && is_numeric($value)) {
+        if($rule === 'notNumber' && $ruleFunction->notNumber($value)) {
             $this->addError($field, $customMessage ?: "This " . $fieldName . " should not be number!");
         }
 
+        // Check for specialchars and numbers field
+        if($rule === 'specialCharacter&notNumber' && $ruleFunction->specialCharacterNotNumber($value)) {
+            $this->addError($field, $customMessage ?: "This " . $fieldName . " can't contain special characters & not numbers!");
+        }
+
         // Check if jpRadio is not never, region must be required
-        if($rule === 'regionCheckNotNever' && $this->data['jpRadio'] !== 'never' && (is_null($value) || $value === '')) {
+        if($rule === 'regionCheckNotNever' && $this->data['jpRaido'] !== 'never' && $ruleFunction->required($value)) {
             $this->addError($field, $customMessage ?: "This ". $fieldName ." is required!");
         }
 
         // Check for email should be email format
-        if($rule === 'email' && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
+        if($rule === 'email' && $ruleFunction->checkEmail($value)) {
             $this->addError($field, $customMessage ?: "This " . $fieldName . " must be a valid email address!");
         }
 

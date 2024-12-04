@@ -19,8 +19,9 @@ class Validator {
             $value = isset($this->data[$field]) ? $this->data[$field] : null;
             $rulesArray = explode('|', $rules);
             // Check for input
-            $field = $field === 'nationalityInput' ? 'nationality' : $field;
+            
             $field = $field === 'tNationalityInput' ? 'tNationality' : $field;
+            $field = $field === 'nationalityInput' ? 'nationality' : $field;
             $field = $field === 'campaignInput' ? 'campaign' : $field;
             foreach ($rulesArray as $rule) {
                 $this->applyRule($field, $rule, $value);
@@ -62,11 +63,18 @@ class Validator {
         
         // Custom nationality validation: "Other" selected but input is empty
         if ($rule === 'nationalityOtherRequired') {
-            if (isset($this->data['nationality']) && $this->data['nationality'] === 'other' && $ruleFunction->required($value)) {
-                $this->addError($field, $customMessage ?: "This other " . $fieldName . " is required!");
-            }
-            if (isset($this->data['tNationality']) && $this->data['tNationality'] === 'other' && $ruleFunction->required($value)) {
-                $this->addError($field, $customMessage ?: "This other" . $fieldName . " is required!");
+        
+            if (isset($this->data['nationality']) &&$field=="nationality"&& $this->data['nationality'] === 'other') {
+                if($ruleFunction->required($value)){
+                    $this->addError($field, $customMessage ?: "This other " . $fieldName . " is required!");
+                }
+            }else
+      
+            if (isset($this->data['tNationality']) && $field=="tNationality"&& $this->data['tNationality'] === 'other' ) {
+                if($ruleFunction->required($value))
+                { 
+                    $this->addError($field, $customMessage ?: "This other t" . $fieldName . " is required!");
+                }
             }
         }
         // Check for length should not greater than variable number field
@@ -96,10 +104,8 @@ class Validator {
         }
         
         // Check if jpRadio is not never, region must be required
-        if($rule === 'regionCheckNotNever' && $this->data['jpRadio'] !== 'never') {
-            if($ruleFunction->required($value)) {
-                $this->addError($field, $customMessage ?: "This ". $fieldName ." is required!");
-            }
+        if($rule === 'regionCheckNotNever' && isset($this->data['jpRaido'])&& $this->data['jpRaido'] !== 'never' && $ruleFunction->required($value)) {
+            $this->addError($field, $customMessage ?: "This ". $fieldName ." is required!");
         }
         // Check for email should be email format
         if($rule === 'email' && $ruleFunction->checkEmail($value)) {

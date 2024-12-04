@@ -1,5 +1,4 @@
 <?php
-
 class Rules {
     public function required($value)
     {
@@ -44,7 +43,8 @@ class Rules {
         }
         return 0;
     }
-    public function ageWithin($value,$rule){
+    public function ageWithin($value,$rule)
+    {
         $date = new \DateTime($value);
         $maxInterval = DateInterval::createFromDateString("$rule years");
         $today = new DateTime();
@@ -54,13 +54,15 @@ class Rules {
         }
         return 0;        
     }
-    public function fileSize($value,$max){
+    public function fileSize($value,$max)
+    {
         if($value['size'] > ($max * 1048576)) {
             return 1;
         }
         return 0;
     }
-    public function fileType($value,$ruleValueArray){
+    public function fileType($value,$ruleValueArray)
+    {
        // check for image type
         if(!in_array(strtolower(pathinfo($value['name'], PATHINFO_EXTENSION)), $ruleValueArray)) {
            return 1;
@@ -88,7 +90,8 @@ class Rules {
         }
         return 0;
     }
-    public function notContainNumber($value){
+    public function notContainNumber($value)
+    {
         
         if(preg_match('/\d/', $value)){
             return 1;

@@ -10,7 +10,7 @@ class HomeController {
     }
     public function create($router)
     {
-        include VALIDATOR . 'CreateFormRequest.php';
+        include REQUEST . 'createFormRequest.php';
     }
     public function store($router)
     {

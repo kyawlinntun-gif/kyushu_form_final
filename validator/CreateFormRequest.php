@@ -119,6 +119,5 @@ if ($validator->validate()) {
     $errors = $validator->errors();
     $_SESSION['data'] = json_encode($data);
     $_SESSION['errors'] = json_encode($errors);
-    // $router->redirect('/');
-    print_r($errors);
+    $router->redirect('/');
 }

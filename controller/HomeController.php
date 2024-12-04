@@ -57,20 +57,25 @@ class HomeController {
         $result = $db->insert('users_table', ['user_id' => 1, 'user_data' => $kyushuJson, 'flag' => 1]);
         if($result) {
             unset($_SESSION['data']);
-            unset($_SESSION['confirm']);
+            $_SESSION['confirm'] = 'store';
             $router->redirect('/complete');
         }
     }
     public function confirm($router) 
     {
-        include VIEW . 'confirms/index.php';
-        // Not allow user to enter without form submit
-        if(!$_SESSION['confirm']) {
+        // not allow to enter without confirm and data 
+        if(!(isset($_SESSION['confirm']) && $_SESSION['confirm'] === 'create' && isset($_SESSION['data']) && $_SESSION['data'])) {
             $router->redirect('/');
         }
+        include VIEW . 'confirms/index.php';
     }
-    public function complete()
+    public function complete($router)
     {
+         // not allow to enter without confirm and data 
+         if(!(isset($_SESSION['confirm']) && $_SESSION['confirm'] === 'store' && isset($_SESSION['data']) && $_SESSION['data'])) {
+            unset($_SESSION['confirm']);
+            $router->redirect('/');
+        }
         include VIEW . 'complete.php';
     }
 }

@@ -17,7 +17,7 @@ $router->get('/confirm', function () use ($router, $controller) {
 $router->post('/store', function () use ($router, $controller) {
     $controller->store($router);
 });
-$router->get('/complete', function () use ($controller) {
-    $controller->complete();
+$router->get('/complete', function () use ($router, $controller) {
+    $controller->complete($router);
 });
 $router->dispatch();

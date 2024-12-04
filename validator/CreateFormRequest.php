@@ -101,7 +101,7 @@ $rules = [
 $customMessages = [];
 $validator = new Validator($data, $rules, $customMessages);
 if ($validator->validate()) {
-    $_SESSION['confirm'] = true;
+    $_SESSION['confirm'] = 'create';
     // Store and save image with name
     $avatar = $data['uploadAvatar'];
     $avatarName = time() . $avatar['name'];
@@ -119,5 +119,6 @@ if ($validator->validate()) {
     $errors = $validator->errors();
     $_SESSION['data'] = json_encode($data);
     $_SESSION['errors'] = json_encode($errors);
-    $router->redirect('/');
+    // $router->redirect('/');
+    print_r($errors);
 }

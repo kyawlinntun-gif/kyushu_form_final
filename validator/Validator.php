@@ -62,11 +62,15 @@ class Validator {
         
         // Custom nationality validation: "Other" selected but input is empty
         if ($rule === 'nationalityOtherRequired') {
-            if (isset($this->data['nationality']) && $this->data['nationality'] === 'other' && $ruleFunction->required($value)) {
-                $this->addError($field, $customMessage ?: "This other " . $fieldName . " is required!");
+            if (isset($this->data['nationality']) && $this->data['nationality'] === 'other' && $field === 'nationality') {
+                if($ruleFunction->required($value)) {
+                    $this->addError($field, $customMessage ?: "This other " . $fieldName . " is required!");
+                }
             }
-            if (isset($this->data['tNationality']) && $this->data['tNationality'] === 'other' && $ruleFunction->required($value)) {
-                $this->addError($field, $customMessage ?: "This other" . $fieldName . " is required!");
+            if (isset($this->data['tNationality']) && $this->data['tNationality'] === 'other' && $field === 'tNationality') {
+                if($ruleFunction->required($value)) {
+                    $this->addError($field, $customMessage ?: "This other" . $fieldName . " is required!");
+                }
             }
         }
         // Check for length should not greater than variable number field

@@ -78,9 +78,13 @@ class Validator {
                     $this->addError($field, $customMessage ?: "This " . $fieldName . " must be within " . $ruleValueArray[0] . " years!");
                 }
                 break;
+            case 'notNumber': 
+                if (!$ruleFunction->isNumber($value)) {
+                    $this->addError($field, $customMessage ?: "This " . $fieldName . " must not be numbers!");
+                }
             case 'notContainNumber':
                 if ($ruleFunction->notContainNumber($value)) {
-                    $this->addError($field, $customMessage ?: "This " . $fieldName . " should not contain numbers.");
+                    $this->addError($field, $customMessage ?: "This " . $fieldName . " should not contain numbers!");
                 }
                 break;
             case 'specialCharacter':
@@ -103,7 +107,7 @@ class Validator {
                 break;
             case 'phoneNumber':
                 $formatValue = str_replace(['+', ' '], '', $value);
-                if ($ruleFunction->is_number($formatValue)) {
+                if ($ruleFunction->isNumber($formatValue)) {
                     $this->addError($field, $customMessage ?: "This " . $fieldName . " must contain only numbers!");
                 }
                 break;

@@ -215,7 +215,7 @@
                             <div class="form_gp img_upload">
                                 <h5 class="title">Please upload a photo that shows all applicate in the photo</h5>
                                 <figure class="upload_img">
-                                    <img src="./../assets/img/<?= $data->uploadAvatar ?>" alt="<?= $data->uploadAvatar ?>">
+                                    <img src="./../assets/upload/<?= $data->uploadAvatar ?>" alt="<?= $data->uploadAvatar ?>">
                                 </figure>
                             </div>
 
@@ -285,7 +285,7 @@
                 </div>
                 <div class="btn_submit">
                     <a href="/" class="back_button">Back</a>
-                    <button type="submit" name="submit" value="confirm" class="submit_btn"
+                    <button type="submit" name="submit" value="store" class="submit_btn"
                     <?= !$data->policy ? 'disabled' : ''; ?>
                     >
                         <span>Confirm</span>

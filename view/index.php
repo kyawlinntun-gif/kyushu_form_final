@@ -7,10 +7,11 @@
     if(isset($_SESSION['data'])) {
         $oldData = json_decode($_SESSION['data']);
         // Remove image
-        if($oldData->uploadAvatar->size > 0) {
 
-            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/assets/upload/' . $oldData->uploadAvatar->name)) {
-                unlink(($_SERVER['DOCUMENT_ROOT'] . '/assets/upload/' . $oldData->uploadAvatar->name));
+        if(is_string($oldData->uploadAvatar)) {
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/assets/upload/' . $oldData->uploadAvatar)) {
+                unlink(($_SERVER['DOCUMENT_ROOT'] . '/assets/upload/' . $oldData->uploadAvatar));
+
             }
         }
     }

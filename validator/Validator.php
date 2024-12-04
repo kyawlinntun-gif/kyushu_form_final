@@ -63,17 +63,14 @@ class Validator {
         
         // Custom nationality validation: "Other" selected but input is empty
         if ($rule === 'nationalityOtherRequired') {
-        
-            if (isset($this->data['nationality']) &&$field=="nationality"&& $this->data['nationality'] === 'other') {
-                if($ruleFunction->required($value)){
+            if (isset($this->data['nationality']) && $this->data['nationality'] === 'other' && $field === 'nationality') {
+                if($ruleFunction->required($value)) {
                     $this->addError($field, $customMessage ?: "This other " . $fieldName . " is required!");
                 }
-            }else
-      
-            if (isset($this->data['tNationality']) && $field=="tNationality"&& $this->data['tNationality'] === 'other' ) {
-                if($ruleFunction->required($value))
-                { 
-                    $this->addError($field, $customMessage ?: "This other t" . $fieldName . " is required!");
+            }
+            if (isset($this->data['tNationality']) && $this->data['tNationality'] === 'other' && $field === 'tNationality') {
+                if($ruleFunction->required($value)) {
+                    $this->addError($field, $customMessage ?: "This other" . $fieldName . " is required!");
                 }
             }
         }

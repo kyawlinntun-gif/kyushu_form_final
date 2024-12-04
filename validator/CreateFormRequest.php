@@ -101,7 +101,7 @@ $rules = [
 $customMessages = [];
 $validator = new Validator($data, $rules, $customMessages);
 if ($validator->validate()) {
-    $_SESSION['confirm'] = true;
+    $_SESSION['confirm'] = 'create';
     // Store and save image with name
     $avatar = $data['uploadAvatar'];
     $avatarName = time() . $avatar['name'];

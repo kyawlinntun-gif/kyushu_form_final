@@ -19,8 +19,9 @@ class Validator {
             $value = isset($this->data[$field]) ? $this->data[$field] : null;
             $rulesArray = explode('|', $rules);
             // Check for input
-            $field = $field === 'nationalityInput' ? 'nationality' : $field;
+            
             $field = $field === 'tNationalityInput' ? 'tNationality' : $field;
+            $field = $field === 'nationalityInput' ? 'nationality' : $field;
             $field = $field === 'campaignInput' ? 'campaign' : $field;
             foreach ($rulesArray as $rule) {
                 $this->applyRule($field, $rule, $value);
@@ -100,10 +101,8 @@ class Validator {
         }
         
         // Check if jpRadio is not never, region must be required
-        if($rule === 'regionCheckNotNever' && $this->data['jpRadio'] !== 'never') {
-            if($ruleFunction->required($value)) {
-                $this->addError($field, $customMessage ?: "This ". $fieldName ." is required!");
-            }
+        if($rule === 'regionCheckNotNever' && isset($this->data['jpRaido'])&& $this->data['jpRaido'] !== 'never' && $ruleFunction->required($value)) {
+            $this->addError($field, $customMessage ?: "This ". $fieldName ." is required!");
         }
         // Check for email should be email format
         if($rule === 'email' && $ruleFunction->checkEmail($value)) {

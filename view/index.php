@@ -7,15 +7,15 @@
     if(isset($_SESSION['data'])) {
         $oldData = json_decode($_SESSION['data']);
         // Remove image
-        if($oldData->uploadAvatar->size > 0) {
+        if(is_string($oldData->uploadAvatar)) {
             if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/assets/upload/' . $oldData->uploadAvatar)) {
                 unlink(($_SERVER['DOCUMENT_ROOT'] . '/assets/upload/' . $oldData->uploadAvatar));
             }
         }
     }
     // When refresh, unset all session
-    unset($_SESSION['errors']);
-    unset($_SESSION['data']);
+    // unset($_SESSION['errors']);
+    // unset($_SESSION['data']);
 ?>
 <?php view('layouts/header.php', ['title' => 'Form']); ?>
     <div class="container" >

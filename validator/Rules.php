@@ -4,7 +4,10 @@ class Rules {
     public function required($value)
     {
         if(is_array($value)) {
-            return empty($value);
+            if (empty($value) || (isset($value['size']) && $value['size'] <= 0)) {
+                return 1;
+            }
+            return 0; 
         }
         if (is_null(trim($value)) || trim($value) === '' || (isset($value['size']) && $value['size'] <= 0)) {
             return 1;

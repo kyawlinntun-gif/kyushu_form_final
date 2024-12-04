@@ -36,23 +36,19 @@ class Validator {
         // Dynamic Error field
         $fieldName = strtolower(trim(preg_replace('/([a-z])([A-Z])|_/', '$1 $2', $field)));
         $fieldName = $this->mapFieldNames($field, $fieldName); // Refactor for readability
-
         // Dynamic rule
         $parts = explode(':', $rule);
         $rule = $parts[0];
         $ruleValueArray = (count($parts) > 1) ? explode(',', $parts[1]) : [];
-
         // Check for custom error message for the field and rule
         $customMessage = $this->getCustomErrorMessage($field, $rule);
         $ruleFunction = new Rules();
-
         switch ($rule) {
             case 'required':
                 if ($ruleFunction->required($value)) {
                     $this->addError($field, $customMessage ?: "This " . $fieldName . " is required!");
                 }
                 break;
-
             case 'nationalityOtherRequired':
                 if (($this->data['nationality'] === 'other' && $field === 'nationality') || 
                     ($this->data['tNationality'] === 'other' && $field === 'tNationality')) {
@@ -61,13 +57,11 @@ class Validator {
                     }
                 }
                 break;
-
             case 'lengthNotGreaterThan':
                 if ($ruleFunction->lengthNotGreaterThan($value, $ruleValueArray[0])) {
                     $this->addError($field, $customMessage ?: "This " . $fieldName . " must not exceed " . $ruleValueArray[0] . " characters!");
                 }
                 break;
-
             case 'year':
                 if ($ruleFunction->date($value)) {
                     $this->addError($field, $customMessage ?: "Year must be valid!");
@@ -79,25 +73,21 @@ class Validator {
                     $this->addError($field, $customMessage ?: "This " . $fieldName . " should not be greater than today!");
                 }
                 break;
-
             case 'ageNotGreaterThan':
                 if ($ruleFunction->ageWithin($value, $ruleValueArray[0])) {
                     $this->addError($field, $customMessage ?: "This " . $fieldName . " must be within " . $ruleValueArray[0] . " years!");
                 }
                 break;
-
             case 'notContainNumber':
                 if ($ruleFunction->notContainNumber($value)) {
                     $this->addError($field, $customMessage ?: "This " . $fieldName . " should not contain numbers.");
                 }
                 break;
-
             case 'specialCharacter':
                 if ($ruleFunction->specialCharacter($value)) {
                     $this->addError($field, $customMessage ?: "This " . $fieldName . " can't contain special characters!");
                 }
                 break;
-
             case 'regionCheckNotNever':
                 if ($this->data['jpRadio'] !== 'never') {
                     if($ruleFunction->required($value)) {
@@ -111,27 +101,23 @@ class Validator {
                     $this->addError($field, $customMessage ?: "This " . $fieldName . " must be a valid email address!");
                 }
                 break;
-
             case 'phoneNumber':
                 $formatValue = str_replace(['+', ' '], '', $value);
                 if ($ruleFunction->is_number($formatValue)) {
                     $this->addError($field, $customMessage ?: "This " . $fieldName . " must contain only numbers!");
                 }
                 break;
-
             case 'phoneBetween':
                 $formatValue = str_replace(['+', ' '], '', $value);
                 if ($ruleFunction->lengthBetween($formatValue, $ruleValueArray[0], $ruleValueArray[1])) {
                     $this->addError($field, $customMessage ?: "This " . $fieldName . " must be between " . $ruleValueArray[0] . " and " . $ruleValueArray[1] . " digits!");
                 }
                 break;
-
             case 'fileSize':
                 if ($value['size'] > ($ruleValueArray[0] * 1048576)) {
                     $this->addError($field, $customMessage ?: "This " . $fieldName . " must not exceed " . $ruleValueArray[0] . " MB!");
                 }
                 break;
-
             case 'campaignOtherRequired':
                 if ($this->data['campaign'] && in_array('other', $this->data['campaign'])) {
                     if($ruleFunction->required($value)) {
@@ -184,7 +170,6 @@ class Validator {
             'tPeriod' => 'period',
             'uVideo' => 'video upload'
         ];
-
         return $mapping[$field] ?? $defaultName; // Default to field name if no mapping exists
     }
 }

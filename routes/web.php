@@ -1,5 +1,4 @@
 <?php
-
 require(ROUTES . 'routes.php');
 require(CONTROLLER . 'HomeController.php');
 $router = new Router();

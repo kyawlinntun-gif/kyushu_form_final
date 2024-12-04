@@ -16,3 +16,118 @@ $data = [
 
  $query = "INSERT INTO users_table (user_id, user_data, flag) VALUES (:user_id, :user_data, :flag)";
  echo  $query ;
+
+
+ protected function applyRule($field, $rule, $value)
+{
+    // Dynamic field name formatting
+    $fieldName = strtolower(trim(preg_replace('/([a-z])([A-Z])|_/', '$1 $2', $field)));
+    $fieldName = $this->mapFieldNames($field, $fieldName); // Refactor for readability
+    
+    // Split rule into parts and handle custom values
+    $ruleParts = explode(':', $rule);
+    $rule = $ruleParts[0];
+    $ruleValueArray = isset($ruleParts[1]) ? explode(',', $ruleParts[1]) : [];
+
+    // Check for custom error message
+    $customMessage = $this->getCustomErrorMessage($field, $rule);
+    
+    // Rules object
+    $ruleFunction = new Rules();
+
+    // Apply validation rules
+    switch ($rule) {
+        case 'required':
+            if ($ruleFunction->required($value)) {
+                $this->addError($field, $customMessage ?: "The $fieldName is required.");
+            }
+            break;
+
+        case 'lengthNotGreaterThan':
+            if ($ruleFunction->lengthNotGreaterThan($value, $ruleValueArray[0])) {
+                $this->addError($field, $customMessage ?: "The $fieldName cannot exceed {$ruleValueArray[0]} characters.");
+            }
+            break;
+
+        case 'year':
+            if ($ruleFunction->date($value)) {
+                $this->addError($field, $customMessage ?: "Please enter a valid $fieldName.");
+            }
+            break;
+
+        case 'now':
+            if ($ruleFunction->notToday($value)) {
+                $this->addError($field, $customMessage ?: "The $fieldName cannot be a future date.");
+            }
+            break;
+
+        case 'ageNotGreaterThan':
+            if ($ruleFunction->ageWithin($value, $ruleValueArray[0])) {
+                $this->addError($field, $customMessage ?: "The $fieldName must be under {$ruleValueArray[0]} years old.");
+            }
+            break;
+
+        case 'notContainNumber':
+            if ($ruleFunction->notContainNumber($value)) {
+                $this->addError($field, $customMessage ?: "The $fieldName cannot contain numbers.");
+            }
+            break;
+
+        case 'specialCharacter':
+            if ($ruleFunction->specialCharacter($value)) {
+                $this->addError($field, $customMessage ?: "The $fieldName cannot include special characters.");
+            }
+            break;
+
+        case 'email':
+            if ($ruleFunction->checkEmail($value)) {
+                $this->addError($field, $customMessage ?: "Please provide a valid email address for $fieldName.");
+            }
+            break;
+
+        case 'phoneNumber':
+            $formatValue = str_replace(['+', ' '], '', $value);
+            if ($ruleFunction->is_number($formatValue)) {
+                $this->addError($field, $customMessage ?: "The $fieldName must only contain numbers.");
+            }
+            break;
+
+        case 'fileSize':
+            if ($value['size'] > ($ruleValueArray[0] * 1048576)) {
+                $this->addError($field, $customMessage ?: "The $fieldName must not exceed {$ruleValueArray[0]} MB.");
+            }
+            break;
+
+        case 'nationalityOtherRequired':
+            if (isset($this->data['nationality']) && $this->data['nationality'] === 'other' && $ruleFunction->required($value)) {
+                $this->addError($field, $customMessage ?: "Please specify the $fieldName when 'Other' is selected.");
+            }
+            break;
+
+        default:
+            // Optionally add custom handling for unknown rules
+            break;
+    }
+}
+
+// Method to map field names to user-friendly labels
+private function mapFieldNames($field, $defaultName)
+{
+    $mapping = [
+        'gRadio' => 'gender',
+        'sgRadio' => 'gender',
+        'tFirstName' => 'first name',
+        'gFirstName' => 'first name',
+        'tLastName' => 'last name',
+        'gLastName' => 'last name',
+        'tDob' => 'date of birth',
+        'tNationality' => 'nationality',
+        'tDietary' => 'dietary preferences',
+        'tPeriod' => 'period',
+        'uVideo' => 'video upload'
+    ];
+
+    return $mapping[$field] ?? $defaultName; // Default to field name if no mapping exists
+}
+
+

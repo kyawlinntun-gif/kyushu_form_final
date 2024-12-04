@@ -4,14 +4,18 @@
     // Get Errors
     isset($_SESSION['errors']) ? $errors = json_decode($_SESSION['errors'], true) : '';
     // Get Data
-    isset($_SESSION['data']) ? $oldData = json_decode($_SESSION['data']) : '';
+    if(isset($_SESSION['data'])) {
+        $oldData = json_decode($_SESSION['data']);
+        // Remove image
+        if($oldData->uploadAvatar->size > 0) {
+            if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/assets/upload/' . $oldData->uploadAvatar)) {
+                unlink(($_SERVER['DOCUMENT_ROOT'] . '/assets/upload/' . $oldData->uploadAvatar));
+            }
+        }
+    }
     // When refresh, unset all session
     unset($_SESSION['errors']);
     unset($_SESSION['data']);
-    // Remove image
-    if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/assets/upload/' . $oldData->uploadAvatar)) {
-        unlink(($_SERVER['DOCUMENT_ROOT'] . '/assets/upload/' . $oldData->uploadAvatar));
-    }
 ?>
 <?php view('layouts/header.php', ['title' => 'Form']); ?>
     <div class="container" >

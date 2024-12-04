@@ -30,109 +30,118 @@ class Validator {
         return empty($this->errors); // Return true if no errors, false if errors exist
     }
     // Apply individual rule to the field
+    // Apply individual rule to the field
     protected function applyRule($field, $rule, $value)
     {
-        // Dyanmic Error field
+        // Dynamic Error field
         $fieldName = strtolower(trim(preg_replace('/([a-z])([A-Z])|_/', '$1 $2', $field)));
-        $field === 'gRadio' ? $fieldName = "gender" : '';
-        $field === 'tFirstName' ? $fieldName = "first name" : '';
-        $field === 'tLastName' ? $fieldName = "last name" : '';
-        $field === 'gFirstName' ? $fieldName = "first name" : '';
-        $field === 'gLastName' ? $fieldName = 'last name' : '';
-        $field === 'tDob' ?  $fieldName = 'dob' : '';
-        $field === 'sgRadio' ? $fieldName = 'sgRadio' : ''; 
-        $field === 'tNationality' ? $fieldName = 'nationality' : '';
-        $field === 'tDietary' ? $fieldName = 'dietary' : '';
-        $field === 'tPeriod' ? $fieldName = 'period' : '';
-        $field === 'uVideo' ? $fieldName = 'upload video' : '';
+        $fieldName = $this->mapFieldNames($field, $fieldName); // Refactor for readability
+
         // Dynamic rule
         $parts = explode(':', $rule);
         $rule = $parts[0];
-        if(count($parts) > 1) {
-            $ruleValueArray = explode(',', $parts[1]);
-        }
+        $ruleValueArray = (count($parts) > 1) ? explode(',', $parts[1]) : [];
+
         // Check for custom error message for the field and rule
         $customMessage = $this->getCustomErrorMessage($field, $rule);
         $ruleFunction = new Rules();
-        // Check for required field
-        if($rule === 'required' && $ruleFunction->required($value)) {
-            if($ruleFunction->required($value)) {
-                $this->addError($field, $customMessage ?: "This " . $fieldName . " is required!");
-            }
-        }
-        
-        // Custom nationality validation: "Other" selected but input is empty
-        if ($rule === 'nationalityOtherRequired') {
-            if (isset($this->data['nationality']) && $this->data['nationality'] === 'other' && $field === 'nationality') {
-                if($ruleFunction->required($value)) {
-                    $this->addError($field, $customMessage ?: "This other " . $fieldName . " is required!");
+
+        switch ($rule) {
+            case 'required':
+                if ($ruleFunction->required($value)) {
+                    $this->addError($field, $customMessage ?: "This " . $fieldName . " is required!");
                 }
-            }
-            if (isset($this->data['tNationality']) && $this->data['tNationality'] === 'other' && $field === 'tNationality') {
-                if($ruleFunction->required($value)) {
-                    $this->addError($field, $customMessage ?: "This other" . $fieldName . " is required!");
+                break;
+
+            case 'nationalityOtherRequired':
+                if (($this->data['nationality'] === 'other' && $field === 'nationality') || 
+                    ($this->data['tNationality'] === 'other' && $field === 'tNationality')) {
+                    if ($ruleFunction->required($value)) {
+                        $this->addError($field, $customMessage ?: "This other " . $fieldName . " is required!");
+                    }
                 }
-            }
-        }
-        // Check for length should not greater than variable number field
-        if($rule === 'lengthNotGreaterThan' && $ruleFunction->lengthNotGreaterThan($value, $ruleValueArray[0]))
-        {
-            $this->addError($field, $customMessage ?: "This " . $fieldName . " must not be exceed " . $ruleValueArray[0] . " characters!");
-        }
-        // Check for length of years should not greater than 4 field
-        if($rule === 'year' && $ruleFunction->date($value)) {
-            $this->addError($field, $customMessage ?: "Year must be valid!");
-        } 
-        // Check for date should not greater than today field
-        if($rule === 'now' && $ruleFunction->notToday($value)) {
-            $this->addError($field, $customMessage ?: "This " . $fieldName . " should not be greater than today!");
-        }
-        // Check for age should not greater than variable age field
-        if($rule === 'ageNotGreaterThan' && $ruleFunction->ageWithin($value,$ruleValueArray[0] )) {
-            $this->addError($field, $customMessage ?: "This " . $fieldName ." must be within " . $ruleValueArray[0] . " years!");
-        }
-        // Check for required field
-        if($rule === 'notContainNumber' && $ruleFunction->notContainNumber($value)) {
-            $this->addError($field, $customMessage ?: "This " . $fieldName . " should not contain number.");
-        }
-        // Check for specialchars and numbers field
-        if($rule === 'specialCharacter' && $ruleFunction->specialCharacter($value)) {
-            $this->addError($field, $customMessage ?: "This " . $fieldName . " can't contain special characters!");
-        }
-        
-        // Check if jpRadio is not never, region must be required
-        if($rule === 'regionCheckNotNever' && isset($this->data['jpRaido'])&& $this->data['jpRaido'] !== 'never' && $ruleFunction->required($value)) {
-            $this->addError($field, $customMessage ?: "This ". $fieldName ." is required!");
-        }
-        // Check for email should be email format
-        if($rule === 'email' && $ruleFunction->checkEmail($value)) {
-            $this->addError($field, $customMessage ?: "This " . $fieldName . " must be a valid email address!");
-        }
-        // Check for phone field
-        if($field === 'phone') {
-            $formatValue = str_replace(['+', ' '], '', $value);
-            // Check for phone should be number only
-            if($rule === 'phoneNumber' && $ruleFunction->is_number($formatValue)) {
-                $this->addError($field, $customMessage ?: "This " . $fieldName . " must contain only numbers!");
-            } 
-            // Check for phone number should be 7 and 25 digits
-            if($rule === 'phoneBetween' && $ruleFunction->lengthBetween($formatValue,$ruleValueArray[0] ,$ruleValueArray[1]) ) {
-                $this->addError($field, $customMessage ?: "This " . $fieldName . " must be between " . $ruleValueArray[0] . " and " . $ruleValueArray[1] . " digits!");
-            }
-        }
-        // Check for image file size should not greater than variable value
-        if($rule === 'fileSize' && $value['size'] > ($ruleValueArray[0] * 1048576)) {
-            $this->addError($field, $customMessage ?: "This " . $fieldName . " must not be exceed " . $ruleValueArray[0] . "mb!");
-        }
-        // Custom campaign validation: "Other" selected but input is empty
-        if ($rule === 'campaignOtherRequired') {
-            if(isset($this->data['campaign']) && $this->data['campaign']) {
-                if(in_array('other', $this->data['campaign']) && $ruleFunction->required($value)) {
-                    $this->addError($field, $customMessage ?: "This other " . $fieldName . " is required");
-                } 
-            }
+                break;
+
+            case 'lengthNotGreaterThan':
+                if ($ruleFunction->lengthNotGreaterThan($value, $ruleValueArray[0])) {
+                    $this->addError($field, $customMessage ?: "This " . $fieldName . " must not exceed " . $ruleValueArray[0] . " characters!");
+                }
+                break;
+
+            case 'year':
+                if ($ruleFunction->date($value)) {
+                    $this->addError($field, $customMessage ?: "Year must be valid!");
+                }
+                break;
+
+            case 'now':
+                if ($ruleFunction->notToday($value)) {
+                    $this->addError($field, $customMessage ?: "This " . $fieldName . " should not be greater than today!");
+                }
+                break;
+
+            case 'ageNotGreaterThan':
+                if ($ruleFunction->ageWithin($value, $ruleValueArray[0])) {
+                    $this->addError($field, $customMessage ?: "This " . $fieldName . " must be within " . $ruleValueArray[0] . " years!");
+                }
+                break;
+
+            case 'notContainNumber':
+                if ($ruleFunction->notContainNumber($value)) {
+                    $this->addError($field, $customMessage ?: "This " . $fieldName . " should not contain numbers.");
+                }
+                break;
+
+            case 'specialCharacter':
+                if ($ruleFunction->specialCharacter($value)) {
+                    $this->addError($field, $customMessage ?: "This " . $fieldName . " can't contain special characters!");
+                }
+                break;
+
+            case 'regionCheckNotNever':
+                if ($this->data['jpRadio'] !== 'never') {
+                    if($ruleFunction->required($value)) {
+                        $this->addError($field, $customMessage ?: "This " . $fieldName . " is required!");
+                    }
+                }
+                break;
+
+            case 'email':
+                if ($ruleFunction->checkEmail($value)) {
+                    $this->addError($field, $customMessage ?: "This " . $fieldName . " must be a valid email address!");
+                }
+                break;
+
+            case 'phoneNumber':
+                $formatValue = str_replace(['+', ' '], '', $value);
+                if ($ruleFunction->is_number($formatValue)) {
+                    $this->addError($field, $customMessage ?: "This " . $fieldName . " must contain only numbers!");
+                }
+                break;
+
+            case 'phoneBetween':
+                $formatValue = str_replace(['+', ' '], '', $value);
+                if ($ruleFunction->lengthBetween($formatValue, $ruleValueArray[0], $ruleValueArray[1])) {
+                    $this->addError($field, $customMessage ?: "This " . $fieldName . " must be between " . $ruleValueArray[0] . " and " . $ruleValueArray[1] . " digits!");
+                }
+                break;
+
+            case 'fileSize':
+                if ($value['size'] > ($ruleValueArray[0] * 1048576)) {
+                    $this->addError($field, $customMessage ?: "This " . $fieldName . " must not exceed " . $ruleValueArray[0] . " MB!");
+                }
+                break;
+
+            case 'campaignOtherRequired':
+                if ($this->data['campaign'] && in_array('other', $this->data['campaign'])) {
+                    if($ruleFunction->required($value)) {
+                        $this->addError($field, $customMessage ?: "This other " . $fieldName . " is required");
+                    }
+                }
+                break;
         }
     }
+
     // Add error message for a field
     protected function addError($field, $message)
     {
@@ -158,6 +167,25 @@ class Validator {
     public function displayErrorsForField($fieldName)
     {
         return isset($this->errors[$fieldName]) ? $this->errors[$fieldName] : [];
+    }
+    // Method to map field names to user-friendly labels
+    private function mapFieldNames($field, $defaultName)
+    {
+        $mapping = [
+            'gRadio' => 'gender',
+            'sgRadio' => 'gender',
+            'tFirstName' => 'first name',
+            'gFirstName' => 'first name',
+            'tLastName' => 'last name',
+            'gLastName' => 'last name',
+            'tDob' => 'date of birth',
+            'tNationality' => 'nationality',
+            'tDietary' => 'dietary preferences',
+            'tPeriod' => 'period',
+            'uVideo' => 'video upload'
+        ];
+
+        return $mapping[$field] ?? $defaultName; // Default to field name if no mapping exists
     }
 }
 

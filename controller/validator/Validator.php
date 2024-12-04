@@ -89,7 +89,7 @@ class Validator {
                 break;
             case 'specialCharacter':
                 if ($ruleFunction->specialCharacter($value)) {
-                    $this->addError($field, $customMessage ?: "This " . $fieldName . " can't contain special characters!");
+                    $this->addError($field, $customMessage ?: "This " . $fieldName . " should not include special characters!");
                 }
                 break;
             case 'regionCheckNotNever':
@@ -108,7 +108,7 @@ class Validator {
             case 'phoneNumber':
                 $formatValue = str_replace(['+', ' '], '', $value);
                 if ($ruleFunction->isNumber($formatValue)) {
-                    $this->addError($field, $customMessage ?: "This " . $fieldName . " must contain only numbers!");
+                    $this->addError($field, $customMessage ?: "This " . $fieldName . " must be only numbers!");
                 }
                 break;
             case 'phoneBetween':

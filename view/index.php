@@ -8,6 +8,10 @@
     // When refresh, unset all session
     unset($_SESSION['errors']);
     unset($_SESSION['data']);
+    // Remove image
+    if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/assets/upload/' . $oldData->uploadAvatar)) {
+        unlink(($_SERVER['DOCUMENT_ROOT'] . '/assets/upload/' . $oldData->uploadAvatar));
+    }
 ?>
 <?php view('layouts/header.php', ['title' => 'Form']); ?>
     <div class="container" >

@@ -3,7 +3,7 @@
 class Rules {
     public function required($value)
     {
-        if (is_null($value) || $value === '' || (isset($value['size']) && $value['size'] <= 0)) {
+        if (is_null(trim($value)) || trim($value) === '' || (isset($value['size']) && $value['size'] <= 0)) {
             return 1;
         }
         return 0; 

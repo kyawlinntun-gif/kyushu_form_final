@@ -285,7 +285,7 @@
                 </div>
                 <div class="btn_submit">
                     <a href="/" class="back_button">Back</a>
-                    <button type="submit" name="submit" value="confirm" class="submit_btn"
+                    <button type="submit" name="submit" value="store" class="submit_btn"
                     <?= !$data->policy ? 'disabled' : ''; ?>
                     >
                         <span>Confirm</span>

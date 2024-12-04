@@ -2,35 +2,35 @@
 
 require('Validator.php');
 // Post Data
-$firstName = isset($_POST['firstName']) ? trim($_POST['firstName']) : '';
-$lastName = isset($_POST['lastName']) ? trim($_POST['lastName']) : '';
+$firstName = isset($_POST['firstName']) ? $_POST['firstName'] : '';
+$lastName = isset($_POST['lastName']) ? $_POST['lastName'] : '';
 $dob = isset($_POST['dob']) ? $_POST['dob'] : '';
 $gRadio = isset($_POST['gRadio']) ? $_POST['gRadio'] : '';
 $nationality = isset($_POST['nationality']) ? $_POST['nationality'] : '';
-$nationalityInput = isset($_POST['nationalityInput']) ? trim($_POST['nationalityInput']) : '';
-$occupation = isset($_POST['occupation']) ? trim($_POST['occupation']) : '';
-$religion = isset($_POST['religion']) ? trim($_POST['religion']) : '';
-$snsUsername = isset($_POST['snsUsername']) ? trim($_POST['snsUsername']) : '';
+$nationalityInput = isset($_POST['nationalityInput']) ? $_POST['nationalityInput'] : '';
+$occupation = isset($_POST['occupation']) ? $_POST['occupation'] : '';
+$religion = isset($_POST['religion']) ? $_POST['religion'] : '';
+$snsUsername = isset($_POST['snsUsername']) ? $_POST['snsUsername'] : '';
 $jpRadio = isset($_POST['jpRadio']) ? $_POST['jpRadio'] : '';
 $region = isset($_POST['region']) ? $_POST['region'] : '';
-$dietary = isset($_POST['dietary']) ? trim($_POST['dietary']) : '';
-$email = isset($_POST['email']) ? trim($_POST['email']) : '';
-$phone = isset($_POST['phone']) ? trim($_POST['phone']) : '';
-$tFirstName = isset($_POST['tFirstName']) ? trim($_POST['tFirstName']) : '';
-$tLastName = isset($_POST['tLastName']) ? trim($_POST['tLastName']) : '';
+$dietary = isset($_POST['dietary']) ? $_POST['dietary'] : '';
+$email = isset($_POST['email']) ? $_POST['email'] : '';
+$phone = isset($_POST['phone']) ? $_POST['phone'] : '';
+$tFirstName = isset($_POST['tFirstName']) ? $_POST['tFirstName'] : '';
+$tLastName = isset($_POST['tLastName']) ? $_POST['tLastName'] : '';
 $tDob = isset($_POST['tDob']) ? $_POST['tDob'] : '';
 $sgRadio = isset($_POST['sgRadio']) ? $_POST['sgRadio'] : '';
 $tNationality = isset($_POST['tNationality']) ? $_POST['tNationality'] : '';
-$tNationalityInput = isset($_POST['tNationalityInput']) ? trim($_POST['tNationalityInput']) : '';
-$relationship = isset($_POST['relationship']) ? trim($_POST['relationship']) : '';
-$tDietary = isset($_POST['tDietary']) ? trim($_POST['tDietary']) : '';
+$tNationalityInput = isset($_POST['tNationalityInput']) ? $_POST['tNationalityInput'] : '';
+$relationship = isset($_POST['relationship']) ? $_POST['relationship'] : '';
+$tDietary = isset($_POST['tDietary']) ? $_POST['tDietary'] : '';
 $uploadAvatar = isset($_FILES['uploadAvatar']) ? $_FILES['uploadAvatar'] : '';
-$gFirstName = isset($_POST['gFirstName']) ? trim($_POST['gFirstName']) : '';
-$gLastName = isset($_POST['gLastName']) ? trim($_POST['gLastName']) : '';
+$gFirstName = isset($_POST['gFirstName']) ? $_POST['gFirstName'] : '';
+$gLastName = isset($_POST['gLastName']) ? $_POST['gLastName'] : '';
 $tPeriod = isset($_POST['tPeriod']) ? $_POST['tPeriod'] : '';
 $uVideo = isset($_POST['uVideo']) ? $_POST['uVideo'] : '';
 $campaign = isset($_POST['campaign']) ? $_POST['campaign'] : '';
-$campaignInput = isset($_POST['campaignInput']) ? trim($_POST['campaignInput']) : '';
+$campaignInput = isset($_POST['campaignInput']) ? $_POST['campaignInput'] : '';
 $policy = isset($_POST['policy']) ? $_POST['policy'] : '';
 // Data
 $data = [
@@ -106,7 +106,7 @@ if ($validator->validate()) {
     $avatar = $data['uploadAvatar'];
     $avatarName = time() . $avatar['name'];
     $avatarTmpname = $avatar['tmp_name'];
-    $avatarPath = $_SERVER['DOCUMENT_ROOT'] . '/assets/img/' . $avatarName;
+    $avatarPath = $_SERVER['DOCUMENT_ROOT'] . '/assets/upload/' . $avatarName;
     move_uploaded_file($avatarTmpname, $avatarPath);
     // Store image name only on data
     $data['uploadAvatar'] = $avatarName;

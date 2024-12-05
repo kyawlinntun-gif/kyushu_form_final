@@ -61,9 +61,9 @@ class Rules {
         }
         return 0;
     }
-    public function fileType($value, $ruleValueArray)
+    public function fileType($value, $rule)
     {
-        if(!in_array(strtolower(pathinfo($value, PATHINFO_EXTENSION)), $ruleValueArray)) {
+        if(!in_array(strtolower(pathinfo($value, PATHINFO_EXTENSION)), $rule)) {
            return 1;
         }
         return 0;

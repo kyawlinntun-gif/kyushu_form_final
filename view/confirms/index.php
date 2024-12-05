@@ -49,14 +49,26 @@
                         <div class="form_gp">
                             <h5 class="title">Nationality</h5>
                             <ul>
-                                <?php if($data->nationality): ?>
+                                <?php if($data->nationality === 'singaporean'): ?>
                                 <li>
-                                    <label class="all_checks_radio others-input"><?= $data->nationality === 'singaporean' ? $data->nationality : $data->nationalityInput; ?>
-                                        <input type="radio" checked disabled>
+                                    <label class="all_checks_radio others-input">Singaporean
+                                        <input type="radio" name="nationality" class="all_input" value="singaporean" 
+                                        <?= $data->nationality === 'singaporean' ? 'checked' : ''; ?>>
                                         <span class="checkmark"></span>
                                     </label>
                                 </li>
-                                <?php endif; ?>
+                                <?php else :?>
+                                <li>
+                                    <div class="others">
+                                        <label class="all_checks_radio others-input">Other:
+                                            <input type="radio" name="nationality" value="other"
+                                            <?= isset($data->nationality) && $data->nationality === 'other' ? 'checked' : ''; ?> disabled="disabled">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <input type="text" class="<?= isset($data->nationality) && $data->nationality !== 'singaporean' ? '' : 'dim'; ?>" id="nation_opt1" name="nationalityInput" <?= isset($data->nationality) && $data->nationality === 'other' ? "" : "disabled='disabled'"; ?> name="nationality" value="<?= $data->nationalityInput?>" disabled="disabled">
+                                    </div>
+                                </li>
+                                <?php endif;?>
                             </ul>
                         </div>
                         <!-- Occupation -->
@@ -187,14 +199,26 @@
                         <div class="form_gp">
                             <h5 class="title">Nationality</h5>
                             <ul>
-                                <?php if($data->tNationality): ?>
+                            <?php if($data->tNationality === 'singaporean'): ?>
                                 <li>
-                                    <label class="all_checks_radio others-input"><?= $data->tNationality === 'singaporean' ? $data->tNationality : $data->tNationalityInput; ?>
-                                        <input type="radio" checked disabled>
+                                    <label class="all_checks_radio others-input">Singaporean
+                                        <input type="radio" name="tNationality" class="all_input" value="singaporean" 
+                                        <?= $data->tNationality === 'singaporean' ? 'checked' : ''; ?> disabled="disabled">
                                         <span class="checkmark"></span>
                                     </label>
                                 </li>
-                                <?php endif; ?>
+                                <?php else :?>
+                                <li>
+                                    <div class="others">
+                                        <label class="all_checks_radio others-input">Other:
+                                            <input type="radio" name="tNationality" value="other"
+                                            <?= isset($data->tNationality) && $data->tNationality === 'other' ? 'checked' : ''; ?> disabled="disabled">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <input type="text" class="<?= isset($data->tNationality) && $data->tNationality !== 'singaporean' ? '' : 'dim'; ?>" id="nation_opt1" name="tNationalityInput" <?= isset($data->tNationality) && $data->tNationality === 'other' ? "" : "disabled='disabled'"; ?> name="nationality" value="<?= $data->tNationalityInput?>" disabled="disabled">
+                                    </div>
+                                </li>
+                                <?php endif;?>
                             </ul>
                         </div>
                         <!-- Relationship with applicate -->
@@ -258,17 +282,24 @@
                                 <h5 class="title">Please let us know how you came across this campaign</h5>
                                 <ul>
                                     <?php foreach($data->campaign as $item): ?>
-                                    <li>
-                                        <label class="all_checks_label">
-                                            <?php if($item === 'other'): ?>
-                                                <?= $data->campaignInput; ?>
-                                            <?php else: ?>
-                                                <?= $item; ?>
-                                            <?php endif; ?>
-                                            <input type="checkbox" checked disabled >
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </li>
+                                        <?php if($item === 'other'): ?>
+                                            <li>
+                                                <div class="others">
+                                                    <label class="all_checks_label others-input">Other:
+                                                        <input type="checkbox" class="all_input" checked="checked" disabled="disabled">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                    <input type="text" class="remove_dim_class" name="campaignInput" value="<?= $data->campaignInput; ?>" disabled="disabled">
+                                                </div>
+                                            </li>
+                                        <?php else: ?>
+                                            <li>
+                                                <label class="all_checks_label"><?= $item; ?>
+                                                    <input type="checkbox" value="Friends/Family" checked="checked" disabled="disabled">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </li>
+                                        <?php endif; ?>
                                     <?php endforeach; ?>
                                 </ul>
                             </div>

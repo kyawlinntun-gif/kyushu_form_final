@@ -174,9 +174,10 @@ class Validator {
             'gFirstName' => 'first name',
             'tLastName' => 'last name',
             'gLastName' => 'last name',
+            'dob' => 'date of birth',
             'tDob' => 'date of birth',
             'tNationality' => 'nationality',
-            'tDietary' => 'dietary preferences',
+            'tDietary' => 'dietary restrictions',
             'tPeriod' => 'period',
             'uVideo' => 'video upload'
         ];

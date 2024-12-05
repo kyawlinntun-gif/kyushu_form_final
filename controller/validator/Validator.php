@@ -118,7 +118,7 @@ class Validator {
                 }
                 break;
             case 'fileSize':
-                if ($value['size'] > ($ruleValueArray[0] * 1048576)) {
+                if ($ruleFunction->fileSize($value,$ruleValueArray[0])) {
                     $this->addError($field, $customMessage ?: "This " . $fieldName . " must not exceed " . $ruleValueArray[0] . " MB!");
                 }
                 break;

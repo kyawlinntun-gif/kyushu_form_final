@@ -54,17 +54,16 @@ class Rules {
         }
         return 0;        
     }
-    public function fileSize($value,$max)
+    public function fileSize($value, $max)
     {
-        if($value['size'] > ($max * 1048576)) {
+        if($value > ($max * 1048576)) {
             return 1;
         }
         return 0;
     }
-    public function fileType($value,$ruleValueArray)
+    public function fileType($value, $ruleValueArray)
     {
-       // check for image type
-        if(!in_array(strtolower(pathinfo($value['name'], PATHINFO_EXTENSION)), $ruleValueArray)) {
+        if(!in_array(strtolower(pathinfo($value, PATHINFO_EXTENSION)), $ruleValueArray)) {
            return 1;
         }
         return 0;

@@ -118,10 +118,16 @@ class Validator {
                 }
                 break;
             case 'fileSize':
-                if ($value['size'] > ($ruleValueArray[0] * 1048576)) {
+                if ($ruleFunction->fileSize($value['size'], $ruleValueArray[0])) {
                     $this->addError($field, $customMessage ?: "This " . $fieldName . " must not exceed " . $ruleValueArray[0] . " MB!");
                 }
                 break;
+
+            case 'image':
+                if($ruleFunction->fileType($value['name'], $ruleValueArray)) {
+                    $this->addError($field, $customMessage ?: "This " .  $fieldName . " does not support this extension!");
+                }
+
             case 'campaignOtherRequired':
                 if ($this->data['campaign'] && in_array('other', $this->data['campaign'])) {
                     if($ruleFunction->required($value)) {

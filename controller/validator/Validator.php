@@ -70,7 +70,7 @@ class Validator {
 
             case 'now':
                 if ($ruleFunction->notToday($value)) {
-                    $this->addError($field, $customMessage ?: "This " . $fieldName . " should not be greater than today!");
+                    $this->addError($field, $customMessage ?: "Your age (" . $fieldName . ") should not older than today !");
                 }
                 break;
             case 'ageNotGreaterThan':

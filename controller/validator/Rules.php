@@ -91,7 +91,6 @@ class Rules {
     }
     public function notContainNumber($value)
     {
-        
         if(preg_match('/\d/', $value)){
             return 1;
         }

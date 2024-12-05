@@ -1,5 +1,4 @@
 <?php
-
 define('VIEW_PATH', __DIR__ . '/view/');
 define('VIEW', __DIR__ . '/view/');
 define('VALIDATOR', __DIR__ . '/controller/validator/');

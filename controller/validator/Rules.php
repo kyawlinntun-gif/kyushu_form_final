@@ -56,7 +56,7 @@ class Rules {
     }
     public function fileSize($value, $max)
     {
-        if($value > ($max * 1048576)) {
+        if($value < ($max * 1048576)) {
             return 1;
         }
         return 0;

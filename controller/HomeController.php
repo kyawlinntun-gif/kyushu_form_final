@@ -8,10 +8,16 @@ class HomeController {
     {
         include VIEW . 'index.php';
     }
+    /**
+     * create go to request
+     */
     public function create($router)
     {
         include REQUEST . 'createFormRequest.php';
     }
+    /**
+     * Store data to the database
+     */
     public function store($router)
     {
         if($_SERVER['REQUEST_METHOD'] === 'POST' && $_POST['submit'] === 'store')
@@ -64,17 +70,21 @@ class HomeController {
             }
         }
     }
+    /**
+     * not allow to enter without confirm = create and data
+     */
     public function confirm($router) 
     {
-        // not allow to enter without confirm and data 
         if(!(isset($_SESSION['confirm']) && $_SESSION['confirm'] === 'create' && isset($_SESSION['data']) && $_SESSION['data'])) {
             $router->redirect('/');
         }
         include VIEW . 'confirms/index.php';
     }
+    /**
+     *not allow to enter without confirm and data 
+     */
     public function complete($router)
     {
-         // not allow to enter without confirm and data 
          if(!$_SESSION['confirm'] === 'store') {
             $router->redirect('/');
         }

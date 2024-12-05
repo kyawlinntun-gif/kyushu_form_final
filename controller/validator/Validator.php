@@ -19,7 +19,6 @@ class Validator {
             $value = isset($this->data[$field]) ? $this->data[$field] : null;
             $rulesArray = explode('|', $rules);
             // Check for input
-            
             $field = $field === 'tNationalityInput' ? 'tNationality' : $field;
             $field = $field === 'nationalityInput' ? 'nationality' : $field;
             $field = $field === 'campaignInput' ? 'campaign' : $field;
@@ -29,7 +28,6 @@ class Validator {
         }
         return empty($this->errors); // Return true if no errors, false if errors exist
     }
-    // Apply individual rule to the field
     // Apply individual rule to the field
     protected function applyRule($field, $rule, $value)
     {

@@ -7,13 +7,14 @@ class DB{
     private $db_name;
     private $connection;
     public function __construct()
-    {   $this->host=DB_HOST;
+    {   
+        $this->host=DB_HOST;
         $this->username=DB_USER;
         $this->password=DB_PASS;
         $this->db_name=DB_NAME;
         $this->connect();
     }
-    private function connect() {
+    private function connect(){
         try {
             $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->db_name . ';charset=utf8mb4';
             $options = [

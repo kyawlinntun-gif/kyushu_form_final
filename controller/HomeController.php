@@ -75,7 +75,7 @@ class HomeController {
     public function complete($router)
     {
          // not allow to enter without confirm and data 
-         if(!$_SESSION['confirm'] === 'store') {
+         if(!($_SESSION['confirm'] && $_SESSION['confirm'] === 'store')) {
             $router->redirect('/');
         }
         include VIEW . 'complete.php';

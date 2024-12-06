@@ -2,7 +2,6 @@
 
 // Connect to db
 require('./../config/DB.php');
-require(VALIDATOR . 'Validator.php');
 
 class HomeController {
     public function index()

@@ -1,5 +1,4 @@
 <?php
-require(VALIDATOR . 'Validator.php');
 // Post Data
 $firstName = isset($_POST['firstName']) ? $_POST['firstName'] : '';
 $lastName = isset($_POST['lastName']) ? $_POST['lastName'] : '';
@@ -32,50 +31,39 @@ $campaign = isset($_POST['campaign']) ? $_POST['campaign'] : '';
 $campaignInput = isset($_POST['campaignInput']) ? $_POST['campaignInput'] : '';
 $policy = isset($_POST['policy']) ? $_POST['policy'] : '';
 
-
-function sanitize_js_input($input) {
-   //j_event
-    $dangerous_attributes = ['onfocus', 'onclick', 'onload', 'onerror', 'onchange', 'onmouseover', 'onmouseout', 'onkeypress', 'onkeydown', 'onkeyup','<script>'];
-    // Replace dangerous events with empty strings
-    foreach ($dangerous_attributes as $attribute) {
-        $input = preg_replace('/\s?' . preg_quote($attribute) . '=["\'][^"\']*["\']/i', '', $input);
-    }
-    return htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
-}
-
-
 // Data
 $data = [
     'firstName' => htmlspecialchars($firstName),
-    'lastName' => $lastName,
-    'dob' => $dob,
-    'gRadio' => $gRadio,
-    'nationality' => $nationality,
-    'nationalityInput' => $nationalityInput,
-    'occupation' => $occupation,
-    'religion' => $religion,
-    'snsUsername' => sanitize_js_input($snsUsername),
-    'jpRadio' => $jpRadio,
+    'lastName' => htmlspecialchars($lastName),
+    'dob' => htmlspecialchars($dob),
+    'gRadio' => htmlspecialchars($gRadio),
+    'nationality' => htmlspecialchars($nationality),
+    'nationalityInput' => htmlspecialchars($nationalityInput),
+    'occupation' => htmlspecialchars($occupation),
+    'religion' => htmlspecialchars($religion),
+    'snsUsername' => htmlspecialchars($snsUsername),
+    // 'snsUsername' => sanitize_js_input($snsUsername),
+    'jpRadio' => htmlspecialchars($jpRadio),
     'region' => $region,
-    'dietary' => $dietary,
-    'email' => $email,
-    'phone' => $phone,
-    'tFirstName' => $tFirstName,
-    'tLastName' => $tLastName,
-    'tDob' => $tDob,
-    'sgRadio' => $sgRadio,
-    'tNationality' => $tNationality,
-    'tNationalityInput' => $tNationalityInput,
-    'relationship' => $relationship,
-    'tDietary' => $tDietary,
+    'dietary' => htmlspecialchars($dietary),
+    'email' => htmlspecialchars($email),
+    'phone' => htmlspecialchars($phone),
+    'tFirstName' => htmlspecialchars($tFirstName),
+    'tLastName' => htmlspecialchars($tLastName),
+    'tDob' => htmlspecialchars($tDob),
+    'sgRadio' => htmlspecialchars($sgRadio),
+    'tNationality' => htmlspecialchars($tNationality),
+    'tNationalityInput' => htmlspecialchars($tNationalityInput),
+    'relationship' => htmlspecialchars($relationship),
+    'tDietary' => htmlspecialchars($tDietary),
     'uploadAvatar' => $uploadAvatar,
-    'gFirstName' => $gFirstName,
-    'gLastName' => $gLastName,
+    'gFirstName' => htmlspecialchars($gFirstName),
+    'gLastName' => htmlspecialchars($gLastName),
     'tPeriod' => $tPeriod,
-    'uVideo' => $uVideo,
+    'uVideo' => htmlspecialchars($uVideo),
     'campaign' => $campaign,
-    'campaignInput' => $campaignInput,
-    'policy' => $policy
+    'campaignInput' => htmlspecialchars($campaignInput),
+    'policy' => htmlspecialchars($policy)
 ];
 // Rules
 $rules = [
@@ -127,7 +115,6 @@ if ($validator->validate()) {
     $router->redirect('/confirm');
 } else {
     // Store Data in session
-    $_SESSION['data'] = json_encode($data);
     $errors = $validator->errors();
     $_SESSION['data'] = json_encode($data);
     $_SESSION['errors'] = json_encode($errors);

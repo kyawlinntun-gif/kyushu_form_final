@@ -33,7 +33,7 @@ $campaignInput = isset($_POST['campaignInput']) ? $_POST['campaignInput'] : '';
 $policy = isset($_POST['policy']) ? $_POST['policy'] : '';
 // Data
 $data = [
-    'firstName' => $firstName,
+    'firstName' => htmlspecialchars($firstName),
     'lastName' => $lastName,
     'dob' => $dob,
     'gRadio' => $gRadio,

@@ -1,7 +1,8 @@
 <?php
 
 // Connect to db
-require('./../config/ApplicantForm.php');
+require('./../config/DB.php');
+require('./../config/ApplicantForm.php')
 class HomeController {
     public function index()
     {

@@ -178,5 +178,13 @@ class Validator {
         ];
         return $mapping[$field] ?? $defaultName; // Default to field name if no mapping exists
     }
+    // Change data format to store
+    function prepareToStore($input){
+        return htmlspecialchars(preg_replace('/\s+/', ' ', trim($input)), ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5);
+    }
+    // Change array format to store
+    function normalize($input){
+        return array_map('prepareToStore',$input);
+    }
 }
 

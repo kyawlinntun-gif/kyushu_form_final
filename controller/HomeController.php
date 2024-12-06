@@ -2,6 +2,7 @@
 
 // Connect to db
 require('./../config/DB.php');
+require(VALIDATOR . 'Validator.php');
 
 class HomeController {
     public function index()
@@ -24,39 +25,40 @@ class HomeController {
         {
             // Change data storage format and Store on database
             $data = json_decode($_SESSION['data']);
+            $validator = new Validator();
             $kyushuDb = [
                 'main' => [
-                    'firstName' => prepareToStore($data->firstName),
-                    'lastName' => prepareToStore($data->lastName),
-                    'dob' => prepareToStore($data->dob),
-                    'gRadio' => prepareToStore($data->gRadio),
-                    'nationality' => $data->nationality === 'singaporean' ? prepareToStore($data->nationality) : prepareToStore($data->nationalityInput),
-                    'occupation' => prepareToStore($data->occupation),
-                    'religion' => prepareToStore($data->religion),
-                    'snsUsername' => prepareToStore($data->snsUsername),
-                    'jpRadio' => prepareToStore($data->jpRadio),
-                    'region' => $data->region ? normalize($data->region): '',
-                    'dietary' => prepareToStore($data->dietary),
-                    'email' => prepareToStore($data->email),
-                    'phone' => prepareToStore($data->phone),
+                    'firstName' => $validator->prepareToStore($data->firstName),
+                    'lastName' => $validator->prepareToStore($data->lastName),
+                    'dob' => $validator->prepareToStore($data->dob),
+                    'gRadio' => $validator->prepareToStore($data->gRadio),
+                    'nationality' => $data->nationality === 'singaporean' ? $validator->prepareToStore($data->nationality) : $validator->prepareToStore($data->nationalityInput),
+                    'occupation' => $validator->prepareToStore($data->occupation),
+                    'religion' => $validator->prepareToStore($data->religion),
+                    'snsUsername' => $validator->prepareToStore($data->snsUsername),
+                    'jpRadio' => $validator->prepareToStore($data->jpRadio),
+                    'region' => $data->region ? $validator->normalize($data->region): '',
+                    'dietary' => $validator->prepareToStore($data->dietary),
+                    'email' => $validator->prepareToStore($data->email),
+                    'phone' => $validator->prepareToStore($data->phone),
                 ],
                 'pt1' => [
-                    'tFirstName' => prepareToStore($data->tFirstName),
-                    'tLastName' => prepareToStore($data->tLastName),
-                    'tDob' => prepareToStore($data->tDob),
-                    'sgRadio' => prepareToStore($data->sgRadio),
-                    'tNationality' => $data->tNationality === 'singaporean' ? prepareToStore($data->tNationality) : prepareToStore($data->tNationalityInput),
-                    'relationship' => prepareToStore($data->relationship),
-                    'tDietary' => prepareToStore($data->tDietary),
+                    'tFirstName' => $validator->prepareToStore($data->tFirstName),
+                    'tLastName' => $validator->prepareToStore($data->tLastName),
+                    'tDob' => $validator->prepareToStore($data->tDob),
+                    'sgRadio' => $validator->prepareToStore($data->sgRadio),
+                    'tNationality' => $data->tNationality === 'singaporean' ? $validator->prepareToStore($data->tNationality) : $validator->prepareToStore($data->tNationalityInput),
+                    'relationship' => $validator->prepareToStore($data->relationship),
+                    'tDietary' => $validator->prepareToStore($data->tDietary),
                     'uploadAvatar' => $data->uploadAvatar,
                 ],
                 'pt2' => [
-                    'gFirstName' => prepareToStore($data->gFirstName),
-                    'gLastName' => prepareToStore($data->gLastName),
-                    'tPeriod' => $data->tPeriod ? normalize($data->tPeriod) : '',
+                    'gFirstName' => $validator->prepareToStore($data->gFirstName),
+                    'gLastName' => $validator->prepareToStore($data->gLastName),
+                    'tPeriod' => $data->tPeriod ? $validator->normalize($data->tPeriod) : '',
                     'uVideo' => $data->uVideo ? 'Uploaded' : 'Not Uploaded',
-                    'campaign' => $data->campaign ? array_map(function($item) use ($data) {
-                        return $item === 'other' ? prepareToStore($data->campaignInput) : prepareToStore($item);
+                    'campaign' => $data->campaign ? array_map(function($item) use ($data, $validator) {
+                        return $item === 'other' ? $validator->prepareToStore($data->campaignInput) : $validator->prepareToStore($item);
                     }, $data->campaign): ''
                 ]
             ];

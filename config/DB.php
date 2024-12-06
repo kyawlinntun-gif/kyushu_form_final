@@ -1,5 +1,4 @@
 <?php
-require('./../config/const.php');
 class DB{
     private $host;
     private $username;
@@ -25,23 +24,6 @@ class DB{
             $this->connection = new PDO($dsn,$this->username, $this->password, $options);
         } catch (PDOException $e) {
             die("Database error -> " . $e->getMessage());
-        }
-    }
-    public function insert(string $table,array $data){
-        try {
-            $columns= implode(", ", array_keys($data));
-            $valueVariables=":". implode(", :", array_keys($data));
-            $query = "INSERT INTO $table ( $columns) VALUES ( $valueVariables)";
-            $stmt = $this->connection->prepare($query);
-            //dynamic bind
-            foreach($data as $column=>$value){
-                $pdo_rule= is_int($value)?PDO::PARAM_INT:PDO::PARAM_STR;
-                $stmt->bindValue(":$column", $value, $pdo_rule);
-            }
-            $result = $stmt->execute();
-            return $result;
-        } catch (PDOException $e) {
-            echo "Query error: ", $e->getMessage();
         }
     }
     public function getConnection(){

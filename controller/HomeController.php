@@ -2,7 +2,7 @@
 
 // Connect to db
 require('./../config/DB.php');
-
+require('./../config/ApplicantForm.php')
 class HomeController {
     public function index()
     {
@@ -62,8 +62,8 @@ class HomeController {
                 ]
             ];
             $kyushuJson = json_encode($kyushuDb);
-            $db = new DB();
-            $result = $db->insert('users_table', ['user_id' => 1, 'user_data' => $kyushuJson, 'flag' => 1]);
+            $db = new ApplicantForm();
+            $result = $db->insert($kyushuJson);
             if($result) {
                 unset($_SESSION['data']);
                 $_SESSION['confirm'] = 'store';

@@ -31,6 +31,19 @@ $uVideo = isset($_POST['uVideo']) ? $_POST['uVideo'] : '';
 $campaign = isset($_POST['campaign']) ? $_POST['campaign'] : '';
 $campaignInput = isset($_POST['campaignInput']) ? $_POST['campaignInput'] : '';
 $policy = isset($_POST['policy']) ? $_POST['policy'] : '';
+
+
+function sanitize_js_input($input) {
+   //j_event
+    $dangerous_attributes = ['onfocus', 'onclick', 'onload', 'onerror', 'onchange', 'onmouseover', 'onmouseout', 'onkeypress', 'onkeydown', 'onkeyup','<script>'];
+    // Replace dangerous events with empty strings
+    foreach ($dangerous_attributes as $attribute) {
+        $input = preg_replace('/\s?' . preg_quote($attribute) . '=["\'][^"\']*["\']/i', '', $input);
+    }
+    return htmlspecialchars($input, ENT_QUOTES, 'UTF-8');
+}
+
+
 // Data
 $data = [
     'firstName' => htmlspecialchars($firstName),
@@ -41,7 +54,7 @@ $data = [
     'nationalityInput' => $nationalityInput,
     'occupation' => $occupation,
     'religion' => $religion,
-    'snsUsername' => $snsUsername,
+    'snsUsername' => sanitize_js_input($snsUsername),
     'jpRadio' => $jpRadio,
     'region' => $region,
     'dietary' => $dietary,

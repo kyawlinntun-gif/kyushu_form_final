@@ -10,7 +10,6 @@
         if(is_string($oldData->uploadAvatar)) {
             if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/assets/upload/' . $oldData->uploadAvatar)) {
                 unlink(($_SERVER['DOCUMENT_ROOT'] . '/assets/upload/' . $oldData->uploadAvatar));
-
             }
         }
     }

@@ -39,7 +39,7 @@ class Router
     public function redirect($uri)
     {
         // Redirect the user to a different URI and stop further script execution
-            header("Location: $uri");
-            exit;
-        }
+        header("Location: $uri");
+        exit;
     }
+}

@@ -65,7 +65,6 @@ class Validator {
                     $this->addError($field, $customMessage ?: "Year must be valid!");
                 }
                 break;
-
             case 'now':
                 if ($ruleFunction->notToday($value)) {
                     $this->addError($field, $customMessage ?: "Your age (" . $fieldName . ") should not older than today !");
@@ -80,6 +79,7 @@ class Validator {
                 if (!$ruleFunction->isNumber($value)) {
                     $this->addError($field, $customMessage ?: "This " . $fieldName . " must not be numbers!");
                 }
+                break;
             case 'notContainNumber':
                 if ($ruleFunction->notContainNumber($value)) {
                     $this->addError($field, $customMessage ?: "This " . $fieldName . " should not contain numbers!");
@@ -97,20 +97,19 @@ class Validator {
                     }
                 }
                 break;
-
             case 'email':
                 if ($ruleFunction->checkEmail($value)) {
                     $this->addError($field, $customMessage ?: "This " . $fieldName . " must be a valid email address!");
                 }
                 break;
             case 'phoneNumber':
-                $formatValue = str_replace(['+', ' '], '', $value);
+                $formatValue = preg_replace('/\s+/', ' ', $value);
                 if ($ruleFunction->isNumber($formatValue)) {
                     $this->addError($field, $customMessage ?: "This " . $fieldName . " must be only numbers!");
                 }
                 break;
             case 'phoneBetween':
-                $formatValue = str_replace(['+', ' '], '', $value);
+                $formatValue = preg_replace('/\s+/', ' ', $value);
                 if ($ruleFunction->lengthBetween($formatValue, $ruleValueArray[0], $ruleValueArray[1])) {
                     $this->addError($field, $customMessage ?: "This " . $fieldName . " must be between " . $ruleValueArray[0] . " and " . $ruleValueArray[1] . " digits!");
                 }
@@ -120,12 +119,11 @@ class Validator {
                     $this->addError($field, $customMessage ?: "This " . $fieldName . " must not exceed " . $ruleValueArray[0] . " MB!");
                 }
                 break;
-
             case 'image':
                 if($ruleFunction->fileType($value['name'], $ruleValueArray)) {
                     $this->addError($field, $customMessage ?: "This " .  $fieldName . " does not support this extension!");
                 }
-
+                break;
             case 'campaignOtherRequired':
                 if ($this->data['campaign'] && in_array('other', $this->data['campaign'])) {
                     if($ruleFunction->required($value)) {
@@ -135,7 +133,6 @@ class Validator {
                 break;
         }
     }
-
     // Add error message for a field
     protected function addError($field, $message)
     {

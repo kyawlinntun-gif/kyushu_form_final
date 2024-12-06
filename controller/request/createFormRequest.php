@@ -46,7 +46,7 @@ function sanitize_js_input($input) {
 
 // Data
 $data = [
-    'firstName' => $firstName,
+    'firstName' => htmlspecialchars($firstName),
     'lastName' => $lastName,
     'dob' => $dob,
     'gRadio' => $gRadio,

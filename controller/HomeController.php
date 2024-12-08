@@ -24,7 +24,6 @@ class HomeController {
         {
             // Change data storage format and Store on database
             $data = json_decode($_SESSION['data']);
-            $validator = new Validator();
             $kyushuDb = [
                 'main' => [
                     'firstName' => $data->firstName,
@@ -36,7 +35,7 @@ class HomeController {
                     'religion' => $data->religion,
                     'snsUsername' => $data->snsUsername,
                     'jpRadio' => $data->jpRadio,
-                    'region' => $data->region ? $validator->normalize($data->region): '',
+                    'region' => $data->region ? $data->region : '',
                     'dietary' => $data->dietary,
                     'email' => $data->email,
                     'phone' => $data->phone,
@@ -54,11 +53,9 @@ class HomeController {
                 'pt2' => [
                     'gFirstName' => $data->gFirstName,
                     'gLastName' => $data->gLastName,
-                    'tPeriod' => $data->tPeriod ? $validator->normalize($data->tPeriod) : '',
+                    'tPeriod' => $data->tPeriod ? $data->tPeriod : '',
                     'uVideo' => $data->uVideo ? 'Uploaded' : 'Not Uploaded',
-                    'campaign' => $data->campaign ? array_map(function($item) use ($data, $validator) {
-                        return $item === 'other' ? $data->campaignInput : $item;
-                    }, $data->campaign): ''
+                    'campaign' => $data->campaign ? $data->campaign : ''
                 ]
             ];
             $kyushuJson = json_encode($kyushuDb);

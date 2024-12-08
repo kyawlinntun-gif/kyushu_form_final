@@ -16,6 +16,7 @@
     // When refresh, unset all session
     unset($_SESSION['errors']);
     unset($_SESSION['data']);
+    print_r($oldData);
 ?>
 <?php view('layouts/header.php', ['title' => 'Form']); ?>
     <div class="container" >
@@ -1066,7 +1067,8 @@
                                             <input type="checkbox" name="campaign[]" value="JNTO's Website (japan.travel)"
                                             <?php if(isset($oldData->campaign) && $oldData->campaign): ?>
                                                 <?php foreach($oldData->campaign as $item): ?>
-                                                    <?= $item === "JNTO's Website (japan.travel)" ? 'checked' : ''; ?>
+                                                    <?php $itemDecode = htmlspecialchars_decode($item); ?>
+                                                    <?= $itemDecode === "JNTO's Website (japan.travel)" ? 'checked' : ''; ?>
                                                 <?php endforeach; ?>
                                             <?php endif; ?>
                                             >
@@ -1078,7 +1080,7 @@
                                             <input type="checkbox" name="campaign[]" value="JNTO's Facebook (Visit Japan Now)"
                                             <?php if(isset($oldData->campaign) && $oldData->campaign): ?>
                                                 <?php foreach($oldData->campaign as $item): ?>
-                                                    <?= $item === "JNTO's Facebook (Visit Japan Now)" ? 'checked' : ''; ?>
+                                                    <?= $item == "JNTO's Facebook (Visit Japan Now)" ? 'checked' : ''; ?>
                                                 <?php endforeach; ?>
                                             <?php endif; ?>
                                             >

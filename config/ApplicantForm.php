@@ -11,7 +11,6 @@ class ApplicantForm{
     }
     public function insert(string $data){
         try {
-            $data=$this->connection->quote($data);
             $query = "INSERT INTO $this->table ( user_id,user_data,flag) VALUES ( :user_id, :user_data, :flag)";
             $stmt = $this->connection->prepare($query);
             $stmt->bindValue(":user_id", 1, PDO::PARAM_INT);

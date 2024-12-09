@@ -1,6 +1,5 @@
 <?php 
 require('./../config/DB.php');
-
 class ApplicantForm{
     private $connection;
     private $table="users_table";
@@ -23,5 +22,4 @@ class ApplicantForm{
         }
     }
 }
-
 ?>

@@ -96,5 +96,4 @@ class Rules {
         }
         return 0;
     }
-
 }

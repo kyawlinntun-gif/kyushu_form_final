@@ -1,5 +1,4 @@
 <?php
-
 // Connect to ApplicantForm
 require('./../config/ApplicantForm.php');
 require(VALIDATOR . 'Validator.php');

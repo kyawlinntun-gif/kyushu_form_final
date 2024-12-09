@@ -55,7 +55,9 @@ class HomeController {
                     'gLastName' => $data->gLastName,
                     'tPeriod' => $data->tPeriod ? $data->tPeriod : '',
                     'uVideo' => $data->uVideo ? 'Uploaded' : 'Not Uploaded',
-                    'campaign' => $data->campaign ? $data->campaign : ''
+                    'campaign' => $data->campaign ? array_map(function($item) use ($data) {
+                        return $item === 'other' ? $data->campaignInput : $item;
+                    }, $data->campaign): ''
                 ]
             ];
             $kyushuJson = json_encode($kyushuDb);

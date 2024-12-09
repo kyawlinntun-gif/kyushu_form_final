@@ -16,9 +16,8 @@
     // When refresh, unset all session
     unset($_SESSION['errors']);
     unset($_SESSION['data']);
-    print_r($oldData);
 ?>
-<?php view('layouts/header.php', ['title' => 'Form']); ?>
+<?php view('layouts/header.php', ['title' => 'Applicant Form']); ?>
     <div class="container" >
         <div class="inner_container">
             <p class="req"><strong>Please complete the application form below.</strong></p>
@@ -1067,8 +1066,7 @@
                                             <input type="checkbox" name="campaign[]" value="JNTO's Website (japan.travel)"
                                             <?php if(isset($oldData->campaign) && $oldData->campaign): ?>
                                                 <?php foreach($oldData->campaign as $item): ?>
-                                                    <?php $itemDecode = htmlspecialchars_decode($item); ?>
-                                                    <?= $itemDecode === "JNTO's Website (japan.travel)" ? 'checked' : ''; ?>
+                                                    <?= htmlspecialchars_decode($item, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5) === "JNTO's Website (japan.travel)" ? 'checked' : ''; ?>
                                                 <?php endforeach; ?>
                                             <?php endif; ?>
                                             >
@@ -1080,7 +1078,7 @@
                                             <input type="checkbox" name="campaign[]" value="JNTO's Facebook (Visit Japan Now)"
                                             <?php if(isset($oldData->campaign) && $oldData->campaign): ?>
                                                 <?php foreach($oldData->campaign as $item): ?>
-                                                    <?= $item == "JNTO's Facebook (Visit Japan Now)" ? 'checked' : ''; ?>
+                                                    <?= htmlspecialchars_decode($item, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5) == "JNTO's Facebook (Visit Japan Now)" ? 'checked' : ''; ?>
                                                 <?php endforeach; ?>
                                             <?php endif; ?>
                                             >
@@ -1092,7 +1090,7 @@
                                             <input type="checkbox" name="campaign[]" value="JNTO's Instagram (@visitjapansg)"
                                             <?php if(isset($oldData->campaign) && $oldData->campaign): ?>
                                                 <?php foreach($oldData->campaign as $item): ?>
-                                                    <?= $item === "JNTO's Instagram (@visitjapansg)" ? 'checked' : ''; ?>
+                                                    <?= htmlspecialchars_decode($item, ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5) === "JNTO's Instagram (@visitjapansg)" ? 'checked' : ''; ?>
                                                 <?php endforeach; ?>
                                             <?php endif; ?>
                                             >

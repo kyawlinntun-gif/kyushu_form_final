@@ -1,69 +1,33 @@
 <?php
-require(VALIDATOR . 'Validator.php');
 // Post Data
-$firstName = isset($_POST['firstName']) ? $_POST['firstName'] : '';
-$lastName = isset($_POST['lastName']) ? $_POST['lastName'] : '';
-$dob = isset($_POST['dob']) ? $_POST['dob'] : '';
-$gRadio = isset($_POST['gRadio']) ? $_POST['gRadio'] : '';
-$nationality = isset($_POST['nationality']) ? $_POST['nationality'] : '';
-$nationalityInput = isset($_POST['nationalityInput']) ? $_POST['nationalityInput'] : '';
-$occupation = isset($_POST['occupation']) ? $_POST['occupation'] : '';
-$religion = isset($_POST['religion']) ? $_POST['religion'] : '';
-$snsUsername = isset($_POST['snsUsername']) ? $_POST['snsUsername'] : '';
-$jpRadio = isset($_POST['jpRadio']) ? $_POST['jpRadio'] : '';
-$region = isset($_POST['region']) ? $_POST['region'] : '';
-$dietary = isset($_POST['dietary']) ? $_POST['dietary'] : '';
-$email = isset($_POST['email']) ? $_POST['email'] : '';
-$phone = isset($_POST['phone']) ? $_POST['phone'] : '';
-$tFirstName = isset($_POST['tFirstName']) ? $_POST['tFirstName'] : '';
-$tLastName = isset($_POST['tLastName']) ? $_POST['tLastName'] : '';
-$tDob = isset($_POST['tDob']) ? $_POST['tDob'] : '';
-$sgRadio = isset($_POST['sgRadio']) ? $_POST['sgRadio'] : '';
-$tNationality = isset($_POST['tNationality']) ? $_POST['tNationality'] : '';
-$tNationalityInput = isset($_POST['tNationalityInput']) ? $_POST['tNationalityInput'] : '';
-$relationship = isset($_POST['relationship']) ? $_POST['relationship'] : '';
-$tDietary = isset($_POST['tDietary']) ? $_POST['tDietary'] : '';
-$uploadAvatar = isset($_FILES['uploadAvatar']) ? $_FILES['uploadAvatar'] : '';
-$gFirstName = isset($_POST['gFirstName']) ? $_POST['gFirstName'] : '';
-$gLastName = isset($_POST['gLastName']) ? $_POST['gLastName'] : '';
-$tPeriod = isset($_POST['tPeriod']) ? $_POST['tPeriod'] : '';
-$uVideo = isset($_POST['uVideo']) ? $_POST['uVideo'] : '';
-$campaign = isset($_POST['campaign']) ? $_POST['campaign'] : '';
-$campaignInput = isset($_POST['campaignInput']) ? $_POST['campaignInput'] : '';
-$policy = isset($_POST['policy']) ? $_POST['policy'] : '';
-// Data
-$data = [
-    'firstName' => htmlspecialchars($firstName),
-    'lastName' => $lastName,
-    'dob' => $dob,
-    'gRadio' => $gRadio,
-    'nationality' => $nationality,
-    'nationalityInput' => $nationalityInput,
-    'occupation' => $occupation,
-    'religion' => $religion,
-    'snsUsername' => $snsUsername,
-    'jpRadio' => $jpRadio,
-    'region' => $region,
-    'dietary' => $dietary,
-    'email' => $email,
-    'phone' => $phone,
-    'tFirstName' => $tFirstName,
-    'tLastName' => $tLastName,
-    'tDob' => $tDob,
-    'sgRadio' => $sgRadio,
-    'tNationality' => $tNationality,
-    'tNationalityInput' => $tNationalityInput,
-    'relationship' => $relationship,
-    'tDietary' => $tDietary,
-    'uploadAvatar' => $uploadAvatar,
-    'gFirstName' => $gFirstName,
-    'gLastName' => $gLastName,
-    'tPeriod' => $tPeriod,
-    'uVideo' => $uVideo,
-    'campaign' => $campaign,
-    'campaignInput' => $campaignInput,
-    'policy' => $policy
+// List of expected POST fields
+$postFields = [
+    'firstName', 'lastName', 'dob', 'gRadio', 'nationality', 'nationalityInput',
+    'occupation', 'religion', 'snsUsername', 'jpRadio', 'region', 'dietary',
+    'email', 'phone', 'tFirstName', 'tLastName', 'tDob', 'sgRadio', 'tNationality',
+    'tNationalityInput', 'relationship', 'tDietary', 'gFirstName', 'gLastName',
+    'tPeriod', 'uVideo', 'campaign', 'campaignInput', 'policy'
 ];
+// Data
+// Initialize data array and sanitize fields
+$data = [];
+// Loop through each expected POST field
+foreach ($postFields as $field) {
+    if (isset($_POST[$field])) {
+        if (is_array($_POST[$field])) {
+            // If the value is an array, sanitize each element if it's not empty
+            $data[$field] = !empty($_POST[$field]) ? array_map('htmlspecialchars', $_POST[$field], array_fill(0, count($_POST[$field]), ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5)) : [];
+        } else {
+            // If the value is a string, sanitize it
+            $data[$field] = htmlspecialchars($_POST[$field], ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5);
+        }
+    } else {
+        // Default to an empty string for undefined fields
+        $data[$field] = '';
+    }
+}
+// Handle file upload
+$data['uploadAvatar'] = isset($_FILES['uploadAvatar']) ? $_FILES['uploadAvatar'] : '';
 // Rules
 $rules = [
     'firstName' => 'required|notNumber|notContainNumber|specialCharacter|lengthNotGreaterThan:128',
@@ -114,7 +78,6 @@ if ($validator->validate()) {
     $router->redirect('/confirm');
 } else {
     // Store Data in session
-    $_SESSION['data'] = json_encode($data);
     $errors = $validator->errors();
     $_SESSION['data'] = json_encode($data);
     $_SESSION['errors'] = json_encode($errors);

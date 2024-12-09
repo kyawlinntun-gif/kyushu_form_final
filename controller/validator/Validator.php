@@ -6,10 +6,10 @@ class Validator {
     protected $rules = [];
     protected $customMessages = [];
     // Constructor to initialize data, rules, and custom messages
-    public function __construct($data, $rules, $customMessages = [])
+    public function __construct($data = null, $rules = null, $customMessages = [])
     {
-        $this->data = $data;
-        $this->rules = $rules;
+        $this->data = $data ?? [];
+        $this->rules = $rules ?? [];
         $this->customMessages = $customMessages;
     }
     // Start validating the data
@@ -31,9 +31,6 @@ class Validator {
     // Apply individual rule to the field
     protected function applyRule($field, $rule, $value)
     {
-        // Dynamic Error field
-        $fieldName = strtolower(trim(preg_replace('/([a-z])([A-Z])|_/', '$1 $2', $field)));
-        $fieldName = $this->mapFieldNames($field, $fieldName); // Refactor for readability
         // Dynamic rule
         $parts = explode(':', $rule);
         $rule = $parts[0];
@@ -44,20 +41,20 @@ class Validator {
         switch ($rule) {
             case 'required':
                 if ($ruleFunction->required($value)) {
-                    $this->addError($field, $customMessage ?: "This " . $fieldName . " is required!");
+                    $this->addError($field, $customMessage ?: "This field is required!");
                 }
                 break;
             case 'nationalityOtherRequired':
                 if (($this->data['nationality'] === 'other' && $field === 'nationality') || 
                     ($this->data['tNationality'] === 'other' && $field === 'tNationality')) {
                     if ($ruleFunction->required($value)) {
-                        $this->addError($field, $customMessage ?: "This other " . $fieldName . " is required!");
+                        $this->addError($field, $customMessage ?: "This other field is required!");
                     }
                 }
                 break;
             case 'lengthNotGreaterThan':
                 if ($ruleFunction->lengthNotGreaterThan($value, $ruleValueArray[0])) {
-                    $this->addError($field, $customMessage ?: "This " . $fieldName . " must not exceed " . $ruleValueArray[0] . " characters!");
+                    $this->addError($field, $customMessage ?: "This field must not exceed " . $ruleValueArray[0] . " characters!");
                 }
                 break;
             case 'year':
@@ -67,67 +64,67 @@ class Validator {
                 break;
             case 'now':
                 if ($ruleFunction->notToday($value)) {
-                    $this->addError($field, $customMessage ?: "Your age (" . $fieldName . ") should not older than today !");
+                    $this->addError($field, $customMessage ?: "Your field should not older than today !");
                 }
                 break;
             case 'ageNotGreaterThan':
                 if ($ruleFunction->ageWithin($value, $ruleValueArray[0])) {
-                    $this->addError($field, $customMessage ?: "This " . $fieldName . " must be within " . $ruleValueArray[0] . " years!");
+                    $this->addError($field, $customMessage ?: "This field must be within " . $ruleValueArray[0] . " years!");
                 }
                 break;
             case 'notNumber': 
                 if (!$ruleFunction->isNumber($value)) {
-                    $this->addError($field, $customMessage ?: "This " . $fieldName . " must not be numbers!");
+                    $this->addError($field, $customMessage ?: "This field must not be numbers!");
                 }
                 break;
             case 'notContainNumber':
                 if ($ruleFunction->notContainNumber($value)) {
-                    $this->addError($field, $customMessage ?: "This " . $fieldName . " should not contain numbers!");
+                    $this->addError($field, $customMessage ?: "This field should not contain numbers!");
                 }
                 break;
             case 'specialCharacter':
                 if ($ruleFunction->specialCharacter($value)) {
-                    $this->addError($field, $customMessage ?: "This " . $fieldName . " should not include special characters!");
+                    $this->addError($field, $customMessage ?: "This field should not include special characters!");
                 }
                 break;
             case 'regionCheckNotNever':
                 if ($this->data['jpRadio'] !== 'never') {
                     if($ruleFunction->required($value)) {
-                        $this->addError($field, $customMessage ?: "This " . $fieldName . " is required!");
+                        $this->addError($field, $customMessage ?: "This field is required!");
                     }
                 }
                 break;
             case 'email':
                 if ($ruleFunction->checkEmail($value)) {
-                    $this->addError($field, $customMessage ?: "This " . $fieldName . " must be a valid email address!");
+                    $this->addError($field, $customMessage ?: "This field must be a valid email address!");
                 }
                 break;
             case 'phoneNumber':
                 $formatValue = preg_replace('/\s+/', ' ', $value);
                 if ($ruleFunction->isNumber($formatValue)) {
-                    $this->addError($field, $customMessage ?: "This " . $fieldName . " must be only numbers!");
+                    $this->addError($field, $customMessage ?: "This field must be only numbers!");
                 }
                 break;
             case 'phoneBetween':
                 $formatValue = preg_replace('/\s+/', ' ', $value);
                 if ($ruleFunction->lengthBetween($formatValue, $ruleValueArray[0], $ruleValueArray[1])) {
-                    $this->addError($field, $customMessage ?: "This " . $fieldName . " must be between " . $ruleValueArray[0] . " and " . $ruleValueArray[1] . " digits!");
+                    $this->addError($field, $customMessage ?: "This field must be between " . $ruleValueArray[0] . " and " . $ruleValueArray[1] . " digits!");
                 }
                 break;
             case 'fileSize':
                 if ($ruleFunction->fileSize($value['size'],$ruleValueArray[0])) {
-                    $this->addError($field, $customMessage ?: "This " . $fieldName . " must not exceed " . $ruleValueArray[0] . " MB!");
+                    $this->addError($field, $customMessage ?: "This field must not exceed " . $ruleValueArray[0] . " MB!");
                 }
                 break;
             case 'image':
                 if($ruleFunction->fileType($value['name'], $ruleValueArray)) {
-                    $this->addError($field, $customMessage ?: "This " .  $fieldName . " does not support this extension!");
+                    $this->addError($field, $customMessage ?: "This field does not support this extension!");
                 }
                 break;
             case 'campaignOtherRequired':
                 if ($this->data['campaign'] && in_array('other', $this->data['campaign'])) {
                     if($ruleFunction->required($value)) {
-                        $this->addError($field, $customMessage ?: "This other " . $fieldName . " is required");
+                        $this->addError($field, $customMessage ?: "This other field is required");
                     }
                 }
                 break;
@@ -158,25 +155,6 @@ class Validator {
     public function displayErrorsForField($fieldName)
     {
         return isset($this->errors[$fieldName]) ? $this->errors[$fieldName] : [];
-    }
-    // Method to map field names to user-friendly labels
-    private function mapFieldNames($field, $defaultName)
-    {
-        $mapping = [
-            'gRadio' => 'gender',
-            'sgRadio' => 'gender',
-            'tFirstName' => 'first name',
-            'gFirstName' => 'first name',
-            'tLastName' => 'last name',
-            'gLastName' => 'last name',
-            'dob' => 'date of birth',
-            'tDob' => 'date of birth',
-            'tNationality' => 'nationality',
-            'tDietary' => 'dietary restrictions',
-            'tPeriod' => 'period',
-            'uVideo' => 'video upload'
-        ];
-        return $mapping[$field] ?? $defaultName; // Default to field name if no mapping exists
     }
 }
 

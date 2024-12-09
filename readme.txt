@@ -18,6 +18,6 @@ Before you begin, ensure you have the following installed on your machine:
 git clone https://github.com/kyawlinntun-gif/kyushu_form_final
 cd folder
 ### 2. Import kyushu_db.sql 
-### 3. how to run 
-- sh run.sh
+### 3. how to run with cmd
+php -S localhost:90 -t public
 
